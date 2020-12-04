@@ -1,0 +1,106 @@
+<Project>
+  <Name>HonoursProject</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Security Library</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>IEncryptionService</Name>
+        <Access>Public</Access>
+        <Location left="61" top="33" />
+        <Size width="248" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">Data EncryptData(string key, Data data)</Member>
+        <Member type="Method">Data DecryptData(string key, Data data)</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IKeyExchangeService</Name>
+        <Access>Public</Access>
+        <Location left="587" top="33" />
+        <Size width="386" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">int GenerateIntermediateKey(int common_secret, int private_secret)</Member>
+        <Member type="Method">int GenerateFinalKey(int swapped_secret, int private_secret)</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ISignatureService</Name>
+        <Access>Public</Access>
+        <Location left="1069" top="33" />
+        <Size width="451" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">string SignData(string data, string private_key)</Member>
+        <Member type="Method">bool CheckSignature(string signed_data, string public_key, string check_hash)</Member>
+      </Entity>
+      <Entity type="Structure">
+        <Name>Data</Name>
+        <Access>Public</Access>
+        <Location left="332" top="33" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public char data_pointer</Member>
+        <Member type="Field">public int byte_count</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ISecurityServiceFactory</Name>
+        <Access>Public</Access>
+        <Location left="737" top="566" />
+        <Size width="361" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">IEncryptionService MakeEncryptionService(string method)</Member>
+        <Member type="Method">IKeyExchangeService MakeKeyExchangeService(string method)</Member>
+        <Member type="Method">ISignatureService MakeSignatureService(string method)</Member>
+        <Member type="Method">IHashingService MakeHashingService(string method)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>SecurityServiceFactory</Name>
+        <Access>Public</Access>
+        <Location left="737" top="833" />
+        <Size width="361" height="234" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public IEncryptionService MakeEncryptionService(string method)</Member>
+        <Member type="Method">public IKeyExchangeService MakeKeyExchangeService(string method)</Member>
+        <Member type="Method">public ISignatureService MakeSignatureService(string method)</Member>
+        <Member type="Method">public IHashingService MakeHashingService(string method)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IHashingService</Name>
+        <Access>Public</Access>
+        <Location left="1544" top="33" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">string Hash(string data)</Member>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Realization" first="5" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Command and Control Server</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Device Driver</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Public Information Registrar</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Client</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+</Project>
