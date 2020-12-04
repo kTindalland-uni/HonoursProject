@@ -1,0 +1,3 @@
+/home/kai/HonoursProject/Research/Test Code/glfw/CMakeFiles/rebuild_cache.dir
+/home/kai/HonoursProject/Research/Test Code/glfw/CMakeFiles/test.dir
+/home/kai/HonoursProject/Research/Test Code/glfw/CMakeFiles/edit_cache.dir

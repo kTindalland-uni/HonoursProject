@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/kai/HonoursProject/Research/Test Code/interfaces/build",
+  "command": "/bin/g++-8    -g   -o CMakeFiles/TestProject.dir/main.cpp.o -c \"/home/kai/HonoursProject/Research/Test Code/interfaces/main.cpp\"",
+  "file": "/home/kai/HonoursProject/Research/Test Code/interfaces/main.cpp"
+}
+]

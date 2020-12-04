@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kai/HonoursProject/Research/Test Code/interfaces/Dog.h
+IAnimal.h
+/home/kai/HonoursProject/Research/Test Code/interfaces/IAnimal.h
+
+/home/kai/HonoursProject/Research/Test Code/interfaces/Human.h
+IAnimal.h
+/home/kai/HonoursProject/Research/Test Code/interfaces/IAnimal.h
+
+/home/kai/HonoursProject/Research/Test Code/interfaces/IAnimal.h
+
+/home/kai/HonoursProject/Research/Test Code/interfaces/main.cpp
+Human.h
+/home/kai/HonoursProject/Research/Test Code/interfaces/Human.h
+Dog.h
+/home/kai/HonoursProject/Research/Test Code/interfaces/Dog.h
+
