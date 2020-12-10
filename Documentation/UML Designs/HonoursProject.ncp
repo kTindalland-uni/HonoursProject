@@ -7,7 +7,7 @@
       <Entity type="Interface">
         <Name>IEncryptionService</Name>
         <Access>Public</Access>
-        <Location left="61" top="33" />
+        <Location left="685" top="571" />
         <Size width="248" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">Data EncryptData(string key, Data data)</Member>
@@ -16,7 +16,7 @@
       <Entity type="Interface">
         <Name>IKeyExchangeService</Name>
         <Access>Public</Access>
-        <Location left="587" top="33" />
+        <Location left="1326" top="571" />
         <Size width="386" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">int GenerateIntermediateKey(int common_secret, int private_secret)</Member>
@@ -25,7 +25,7 @@
       <Entity type="Interface">
         <Name>ISignatureService</Name>
         <Access>Public</Access>
-        <Location left="1069" top="33" />
+        <Location left="1758" top="571" />
         <Size width="451" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">string SignData(string data, string private_key)</Member>
@@ -34,7 +34,7 @@
       <Entity type="Structure">
         <Name>Data</Name>
         <Access>Public</Access>
-        <Location left="332" top="33" />
+        <Location left="550" top="284" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">public char data_pointer</Member>
@@ -43,7 +43,7 @@
       <Entity type="Interface">
         <Name>ISecurityServiceFactory</Name>
         <Access>Public</Access>
-        <Location left="737" top="566" />
+        <Location left="629" top="999" />
         <Size width="361" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">IEncryptionService MakeEncryptionService(string method)</Member>
@@ -54,7 +54,7 @@
       <Entity type="Class">
         <Name>SecurityServiceFactory</Name>
         <Access>Public</Access>
-        <Location left="737" top="833" />
+        <Location left="629" top="1266" />
         <Size width="361" height="234" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public IEncryptionService MakeEncryptionService(string method)</Member>
@@ -66,10 +66,123 @@
       <Entity type="Interface">
         <Name>IHashingService</Name>
         <Access>Public</Access>
-        <Location left="1544" top="33" />
+        <Location left="2255" top="571" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">string Hash(string data)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>AesEncryptionService</Name>
+        <Access>Public</Access>
+        <Location left="736" top="284" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Data EncryptData(string key, Data data)</Member>
+        <Member type="Method">public Data DecryptData(string key, Data data)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Service will implement IEncryptionService based on the AES library.</Text>
+        <Location left="940" top="350" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>DiffieHelmanKeyExchangeService</Name>
+        <Access>Public</Access>
+        <Location left="1326" top="284" />
+        <Size width="382" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public int GenerateIntermediateKey(int common_secret, int private_secret)</Member>
+        <Member type="Method">public int GenerateFinalKey(int swapped_secret, int private_secret)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>DHKeyExchangeService will implement Key Exchange using the diffie helman protocol.</Text>
+        <Location left="1139" top="350" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>SHA3HashingService</Name>
+        <Access>Public</Access>
+        <Location left="2258" top="303" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public string Hash(string data)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SignatureService</Name>
+        <Access>Public</Access>
+        <Location left="1905" top="303" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public string SignData(string data, string private_key)</Member>
+        <Member type="Method">public bool CheckSignature(string signed_data, string public_key, string check_hash)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Factory enables easy instanciation of services. This means that when a new method is added only the security library needs to be updated and recompiled. 
+This should make it easier to roll out new versions of the code.</Text>
+        <Location left="1067" top="992" />
+        <Size width="160" height="223" />
+      </Entity>
+      <Entity type="Class">
+        <Name>SecurityService</Name>
+        <Access>Public</Access>
+        <Location left="1326" top="992" />
+        <Size width="382" height="436" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public readonly IEncryptionService encryption_service</Member>
+        <Member type="Field">public readonly IKeyExchangeService key_exchange_service</Member>
+        <Member type="Field">public readonly ISignatureService signature_service</Member>
+        <Member type="Field">public readonly IHashingService hashing_service</Member>
+        <Member type="Field">public readonly ISymmetricKeyGenerationService symmetric_key_generation_service</Member>
+        <Member type="Constructor">public SecurityService(SecurityConfiguration config)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ISymmetricKeyGenerationService</Name>
+        <Access>Public</Access>
+        <Location left="2481" top="571" />
+        <Size width="381" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void GenerateKeys(out string private_key, out string public_key)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>ElipticCurveKeyGenerationService</Name>
+        <Access>Public</Access>
+        <Location left="2506" top="303" />
+        <Size width="328" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void GenerateKeys(out string private_key, out string public_key)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Structure">
+        <Name>SecurityConfiguration</Name>
+        <Access>Public</Access>
+        <Location left="1853" top="992" />
+        <Size width="289" height="306" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public string EncryptionMethod { get; }</Member>
+        <Member type="Property">public string KeyExchangeMethod { get; }</Member>
+        <Member type="Property">public string SignatureMethod { get; }</Member>
+        <Member type="Property">public string HashingMethod { get; }</Member>
+        <Member type="Property">public string SymmetricKeyGenerationMethod { get; }</Member>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Struct created from security configuration file.</Text>
+        <Location left="2184" top="992" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>ConfigurationGenerator</Name>
+        <Access>Public</Access>
+        <Location left="2390" top="992" />
+        <Size width="393" height="308" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public SecurityConfiguration GenerateConfigFromFile(string filepath)</Member>
+        <Member type="Method">public SecurityConfiguration GenerateDefaultConfig()</Member>
+        <Modifier>None</Modifier>
       </Entity>
     </Entities>
     <Relationships>
@@ -77,24 +190,195 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
+      <Relationship type="Realization" first="7" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="9" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="11" second="6">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="12" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="14" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="14" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="14" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="14" second="6">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Realization" first="16" second="15">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="14" second="15">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
     </Relationships>
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Command and Control Server</Name>
     <Language>CSharp</Language>
-    <Entities />
+    <Entities>
+      <Entity type="Class">
+        <Name>CommandAndControlServer</Name>
+        <Access>Public</Access>
+        <Location left="609" top="215" />
+        <Size width="242" height="416" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IDeviceHandler</Name>
+        <Access>Public</Access>
+        <Location left="965" top="215" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void Start()</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IAPIHandler</Name>
+        <Access>Public</Access>
+        <Location left="1193" top="215" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">void Start()</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeviceHandler</Name>
+        <Access>Public</Access>
+        <Location left="965" top="481" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
     <Relationships />
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Device Driver</Name>
     <Language>CSharp</Language>
-    <Entities />
+    <Entities>
+      <Entity type="Class">
+        <Name>CommsModule</Name>
+        <Access>Public</Access>
+        <Location left="467" top="461" />
+        <Size width="361" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public bool SendMessageToServer(IEncryptedMessage message)</Member>
+        <Member type="Method">public void ListenForMessage()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>IncomingMessgeHandler</Name>
+        <Access>Public</Access>
+        <Location left="900" top="461" />
+        <Size width="363" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int newField</Member>
+        <Member type="Method">public void HandleMessage(IEncryptedMessage message)</Member>
+        <Member type="Method">private void HandleXMessage()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Private Function for each type of message that the device driver should need to handle.</Text>
+        <Location left="1287" top="461" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Class">
+        <Name>WorkloadInterface</Name>
+        <Access>Public</Access>
+        <Location left="944" top="151" />
+        <Size width="307" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void SendData(string channel, byte[] data)</Member>
+        <Member type="Method">public string PullData(string channel)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FileSystemInterface</Name>
+        <Access>Public</Access>
+        <Location left="467" top="151" />
+        <Size width="280" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void CreateNewWorkloadFile()</Member>
+        <Member type="Method">public void MakeWorkload()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
     <Relationships />
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Public Information Registrar</Name>
     <Language>CSharp</Language>
-    <Entities />
+    <Entities>
+      <Entity type="Class">
+        <Name>PublicInformationRegistrar</Name>
+        <Access>Public</Access>
+        <Location left="10" top="22" />
+        <Size width="259" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">RegistryRecord[] records</Member>
+        <Member type="Method">public void InitialiseServer()</Member>
+        <Member type="Method">public void Listen()</Member>
+        <Member type="Method">public void HandleRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Structure">
+        <Name>RegistryRecord</Name>
+        <Access>Public</Access>
+        <Location left="319" top="22" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public string public_key</Member>
+        <Member type="Field">public string ip_address</Member>
+        <Member type="Field">public Role role</Member>
+        <Member type="Field">public string friendly_name</Member>
+      </Entity>
+      <Entity type="Enum">
+        <Name>Role</Name>
+        <Access>Public</Access>
+        <Location left="531" top="22" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Value>Server</Value>
+        <Value>Device</Value>
+        <Value>Client</Value>
+        <Value>Unknown</Value>
+      </Entity>
+    </Entities>
     <Relationships />
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
@@ -102,5 +386,44 @@
     <Language>CSharp</Language>
     <Entities />
     <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Message Library</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>IEncryptedMessage</Name>
+        <Access>Public</Access>
+        <Location left="788" top="458" />
+        <Size width="215" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">byte[] PackMessage()</Member>
+        <Member type="Property">int UnpackMessage { get; set; }</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeployWorkloadEncryptedMessage</Name>
+        <Access>Public</Access>
+        <Location left="562" top="71" />
+        <Size width="271" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public byte[] PackMessage()</Member>
+        <Member type="Property">public byte[] EncryptedData { get; set; }</Member>
+        <Member type="Property">public int MessageID { get; set; }</Member>
+        <Member type="Property">public byte[] Signature { get; set; }</Member>
+        <Member type="Property">public int UnpackMessage { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>All other message types will be defined within this library as that will allow all other programs to be able to recognise messages.</Text>
+        <Location left="907" top="119" />
+        <Size width="160" height="148" />
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Realization" first="1" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
   </ProjectItem>
 </Project>
