@@ -184,6 +184,25 @@ This should make it easier to roll out new versions of the code.</Text>
         <Member type="Method">public SecurityConfiguration GenerateDefaultConfig()</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Interface">
+        <Name>IFileIO</Name>
+        <Access>Public</Access>
+        <Location left="1798" top="1499" />
+        <Size width="381" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">SecurityConfiguration ReadConfiguration(string filepath)</Member>
+        <Member type="Method">void WriteConfiguration(SecurityConfiguration config, string filepath)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>XMLFileIO</Name>
+        <Access>Public</Access>
+        <Location left="2390" top="1499" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public SecurityConfiguration ReadConfiguration(string filepath)</Member>
+        <Member type="Method">public void WriteConfiguration(SecurityConfiguration config, string filepath)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Realization" first="5" second="4">
@@ -207,6 +226,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="14" second="0">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -214,6 +235,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="1">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -221,6 +244,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="2">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -228,6 +253,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="6">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -240,11 +267,17 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="14" second="15">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
         <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Realization" first="21" second="20">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>
@@ -255,15 +288,16 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>CommandAndControlServer</Name>
         <Access>Public</Access>
-        <Location left="609" top="215" />
+        <Location left="478" top="214" />
         <Size width="242" height="416" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">public void PollForDevices()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Interface">
         <Name>IDeviceHandler</Name>
         <Access>Public</Access>
-        <Location left="965" top="215" />
+        <Location left="837" top="193" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">void Start()</Member>
@@ -271,21 +305,39 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Interface">
         <Name>IAPIHandler</Name>
         <Access>Public</Access>
-        <Location left="1193" top="215" />
-        <Size width="162" height="216" />
+        <Location left="1065" top="193" />
+        <Size width="195" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">void Start()</Member>
+        <Member type="Method">void ListenForRequests()</Member>
+        <Member type="Method">void HandleRequest()</Member>
       </Entity>
       <Entity type="Class">
         <Name>DeviceHandler</Name>
         <Access>Public</Access>
-        <Location left="965" top="481" />
+        <Location left="837" top="459" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>APIHandler</Name>
+        <Access>Public</Access>
+        <Location left="1088" top="459" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Start()</Member>
+        <Member type="Method">public void ListenForRequests()</Member>
+        <Member type="Method">public void HandleRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
-    <Relationships />
+    <Relationships>
+      <Relationship type="Realization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Device Driver</Name>
@@ -330,7 +382,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>FileSystemInterface</Name>
         <Access>Public</Access>
-        <Location left="467" top="151" />
+        <Location left="511" top="151" />
         <Size width="280" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public void CreateNewWorkloadFile()</Member>
@@ -384,8 +436,76 @@ This should make it easier to roll out new versions of the code.</Text>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Client</Name>
     <Language>CSharp</Language>
-    <Entities />
-    <Relationships />
+    <Entities>
+      <Entity type="Class">
+        <Name>APIHandler</Name>
+        <Access>Public</Access>
+        <Location left="362" top="290" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void MakeRequest()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DataStore</Name>
+        <Access>Public</Access>
+        <Location left="767" top="284" />
+        <Size width="236" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public DeviceData[] Devices { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Structure">
+        <Name>DeviceData</Name>
+        <Access>Public</Access>
+        <Location left="1273" top="35" />
+        <Size width="285" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public string DeviceName { get; set; }</Member>
+        <Member type="Property">public string DeviceWorkloadName { get; set; }</Member>
+        <Member type="Property">public DataPoint[] Data { get; set; }</Member>
+        <Member type="Property">public InputDataPoint[] InputPoints { get; set; }</Member>
+        <Member type="Property">public string Status { get; set; }</Member>
+      </Entity>
+      <Entity type="Structure">
+        <Name>DataPoint</Name>
+        <Access>Public</Access>
+        <Location left="1049" top="35" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public string DataName { get; set; }</Member>
+        <Member type="Property">public string Value { get; set; }</Member>
+      </Entity>
+      <Entity type="Structure">
+        <Name>InputDataPoint</Name>
+        <Access>Public</Access>
+        <Location left="767" top="35" />
+        <Size width="236" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public string InputName { get; set; }</Member>
+        <Member type="Property">public string Type { get; set; }</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>GraphicsHandler</Name>
+        <Access>Public</Access>
+        <Location left="767" top="544" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">DataStore devices</Member>
+        <Member type="Method">public void Display()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="5" second="1">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Aggregation</AssociationType>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+    </Relationships>
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Message Library</Name>
