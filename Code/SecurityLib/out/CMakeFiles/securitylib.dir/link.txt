@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsecuritylib.a  CMakeFiles/securitylib.dir/Services/AESEncryptionService.cpp.o
+/usr/bin/ranlib libsecuritylib.a
