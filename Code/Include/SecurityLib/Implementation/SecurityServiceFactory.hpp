@@ -8,10 +8,11 @@
 namespace securitylib {
 	class SecurityServiceFactory: public ISecurityServiceFactory {
 		public:
-			IEncryptionService MakeEncryptionService(std::string method);
-			IKeyExchangeService MakeKeyExchangeService(std::string method);
-			ISignatureService MakeSignatureService(std::string method);
-			IHashingService MakeHashingService(std::string method);
+			IEncryptionService* MakeEncryptionService(std::string method);
+			IKeyExchangeService* MakeKeyExchangeService(std::string method);
+			ISignatureService* MakeSignatureService(std::string method);
+			IHashingService* MakeHashingService(std::string method);
+			ISymmetricKeyGenerationService* MakeKeyGenerationService(std::string method);
 	};
 }
 
