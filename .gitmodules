@@ -1,6 +1,6 @@
-[submodule "Code/UnitTests/googletest"]
-	path = Code/UnitTests/googletest
-	url = https://github.com/google/googletest.git
 [submodule "Code/cryptopp"]
 	path = Code/cryptopp
 	url = https://github.com/weidai11/cryptopp
+[submodule "Code/UnitTests/googletest"]
+	path = Code/UnitTests/googletest
+	url = https://github.com/google/googletest.git
