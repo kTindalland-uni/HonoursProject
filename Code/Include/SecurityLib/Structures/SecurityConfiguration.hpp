@@ -1,3 +1,6 @@
+#ifndef __SECCONFIG
+#define __SECCONFIG
+
 #include <string>
 
 namespace securitylib {
@@ -9,3 +12,5 @@ namespace securitylib {
 		std::string SymmetricKeyGenerationMethod;
 	};
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __ISECSERVFAC
+#define __ISECSERVFAC
+
 #include <string>
 #include <SecurityLib/Interfaces/IEncryptionService.hpp>
 #include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
@@ -14,3 +17,5 @@ namespace securitylib {
 			virtual ISymmetricKeyGenerationService* MakeKeyGenerationService(std::string method) = 0;
 	};
 }
+
+#endif

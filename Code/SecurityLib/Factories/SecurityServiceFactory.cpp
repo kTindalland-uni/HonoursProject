@@ -5,7 +5,7 @@
 #include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
 #include <SecurityLib/Interfaces/ISignatureService.hpp>
 #include <SecurityLib/Interfaces/IHashingService.hpp>
-#include <SecurityLub/Interfaces/ISymmetricKeyGenerationService.hpp>
+#include <SecurityLib/Interfaces/ISymmetricKeyGenerationService.hpp>
 
 // Implementation definitions
 #include <SecurityLib/Implementation/SecurityServiceFactory.hpp>
@@ -18,46 +18,43 @@
 namespace securitylib {
 
 	IEncryptionService* SecurityServiceFactory::MakeEncryptionService(std::string method) {
-		switch (method) {
-			case "AES":
-				return new AESEncryptionService();
-			default:
-				return new AESEncryptionService();
+		if (method == "AES") {
+			return new AESEncryptionService();
+		}
+		else {
+			return new AESEncryptionService();
 		}
 	}
 
 	IKeyExchangeService* SecurityServiceFactory::MakeKeyExchangeService(std::string method) {
-		switch (method) {
-			case "Diffie-Helman":
-				return new DiffieHelmanKeyExchangeService();
-			default:
-				return new DiffieHelmanKeyExchangeService();
+		if (method == "Diffie-Helman") {
+			return new DiffieHelmanKeyExchangeService();
+		}
+		else {
+			return new DiffieHelmanKeyExchangeService();
 		}
 	}
 
 	ISignatureService* SecurityServiceFactory::MakeSignatureService(std::string method) {
-		switch (method) {
-			default:
-				return new SignatureService();
-		}
+		return new SignatureService();
 	}
 
 
 	IHashingService* SecurityServiceFactory::MakeHashingService(std::string method) {
-		switch (method) {
-			case "SHA3":
-				return new SHA3HashingService();
-			default:
-				return new SHA3HashingService();
+		if (method == "SHA3") {
+			return new SHA3HashingService();
+		}
+		else {
+			return new SHA3HashingService();
 		}
 	}
 
 	ISymmetricKeyGenerationService* SecurityServiceFactory::MakeKeyGenerationService(std::string method) {
-		switch (method) {
-			case "Eliptic-Curve":
-				return new ElipticCurveKeyGenerationService();
-			default:
-				return new ElipticCurveKeyGenerationService();
+		if (method == "Eliptic-Curve") {
+			return new ElipticCurveKeyGenerationService();
+		}
+		else {
+			return new ElipticCurveKeyGenerationService();
 		}
 	}
 }

@@ -1,3 +1,6 @@
+#ifndef __IHASHSERV
+#define __IHASHSERV
+
 #include <string>
 
 namespace securitylib {
@@ -6,3 +9,5 @@ namespace securitylib {
 			virtual std::string Hash(std::string data) = 0;
 	};
 }
+
+#endif

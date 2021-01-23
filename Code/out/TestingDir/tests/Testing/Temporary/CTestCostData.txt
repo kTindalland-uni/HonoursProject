@@ -1,3 +1,0 @@
-TestingTests 0 0
----
-TestingTests

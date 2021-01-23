@@ -1,3 +1,6 @@
+#ifndef __IENCSERV
+#define __IENCSERV
+
 #include <string>
 
 namespace securitylib {
@@ -11,3 +14,5 @@ namespace securitylib {
 	};
 
 }
+
+#endif

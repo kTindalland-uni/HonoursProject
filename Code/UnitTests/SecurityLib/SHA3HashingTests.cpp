@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
-#include <SecurityLib/Implementaton/SHA3HashingService.hpp>
+#include <SecurityLib/Implementation/SHA3HashingService.hpp>
 
 TEST(SHA3Hashing, SunnyDay) {
 	// Arrange
