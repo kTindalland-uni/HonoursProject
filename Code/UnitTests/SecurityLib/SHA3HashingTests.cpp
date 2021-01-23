@@ -12,7 +12,7 @@ TEST(SHA3Hashing, SunnyDay) {
 	result = hashing_service.Hash(test_data);
 
 	// Assert
-	std::string correct_result = "e034863118f611cae9ce9fe1c66e2e7bf750ccbd64f7fcb6a777b3d517332ac6";
+	std::string correct_result = "E034863118F611CAE9CE9FE1C66E2E7BF750CCBD64F7FCB6A777B3D517332AC6";
 
 	ASSERT_EQ(result, correct_result);
 
