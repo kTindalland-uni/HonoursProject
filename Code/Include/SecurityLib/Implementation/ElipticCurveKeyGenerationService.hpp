@@ -1,9 +1,13 @@
-#include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
+#ifndef __ELIPKEYGENSERV
+#define __ELIPKEYGENSERV
+
+#include <SecurityLib/Interfaces/ISymmetricKeyGenerationService.hpp>
 
 namespace securitylib {
-	class ElipticCurveKeyGenerationService: public IKeyExchangeService {
+	class ElipticCurveKeyGenerationService: public ISymmetricKeyGenerationService {
 		public:
-			int GenerateIntermediateKey(int common_key, int private_key);
-			int GenerateFinalKey(int swapped_secret, int private_key);
+			void GenerateKeys(std::string& private_key, std::string& public_key);
 	};
 }
+
+#endif

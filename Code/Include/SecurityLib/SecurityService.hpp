@@ -1,3 +1,6 @@
+#ifndef __SECSERV
+#define __SECSERV
+
 #include <SecurityLib/Structures/SecurityConfiguration.hpp>
 #include <SecurityLib/Interfaces/IEncryptionService.hpp>
 #include <SecurityLib/Interfaces/IHashingService.hpp>
@@ -12,10 +15,12 @@ namespace securitylib {
 			SecurityService(SecurityConfiguration config);
 
 			// Public Fields
-			IEncryptionService encryptionService;
-			IHashingService hashingService;
-			IKeyExchangeService keyExchangeService;
-			ISignatureService signatureService;
-			ISymmetricKeyGenerationService symmetricKeyGenerationService;
+			IEncryptionService* encryptionService;
+			IHashingService* hashingService;
+			IKeyExchangeService* keyExchangeService;
+			ISignatureService* signatureService;
+			ISymmetricKeyGenerationService* symmetricKeyGenerationService;
 	};
 }
+
+#endif

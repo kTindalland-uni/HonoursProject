@@ -4,7 +4,7 @@
 
 namespace securitylib {
 	SecurityConfiguration XMLFileIO::ReadConfiguration(std::string filepath) {
-		SecurityConfig result;
+		SecurityConfiguration result;
 
 		return result;
 	}

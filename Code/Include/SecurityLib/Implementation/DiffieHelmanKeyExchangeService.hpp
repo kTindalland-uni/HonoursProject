@@ -1,4 +1,7 @@
-#include <SecurityLib/Interfaces/IKeyExchangeService>
+#ifndef __DIFHELKEYEXSERV
+#define __DIFHELHEYEXSERV
+
+#include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
 
 namespace securitylib {
 	class DiffieHelmanKeyExchangeService: public IKeyExchangeService {
@@ -7,3 +10,5 @@ namespace securitylib {
 			int GenerateFinalKey(int swapped_secret, int private_secret);
 	};
 }
+
+#endif

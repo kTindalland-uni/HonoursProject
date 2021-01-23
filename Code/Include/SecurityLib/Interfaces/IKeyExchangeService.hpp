@@ -1,3 +1,5 @@
+#ifndef __IKEYEXSERV
+#define __IKEYEXSERV
 
 namespace securitylib {
 
@@ -8,3 +10,5 @@ namespace securitylib {
 	};
 
 }
+
+#endif

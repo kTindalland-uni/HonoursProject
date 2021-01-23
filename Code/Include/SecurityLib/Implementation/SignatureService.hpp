@@ -1,5 +1,8 @@
+#ifndef __SIGSERV
+#define __SIGSERV
+
 #include <string>
-#include <SecurityLib/Services/ISignatureService.hpp>
+#include <SecurityLib/Interfaces/ISignatureService.hpp>
 
 namespace securitylib {
 	class SignatureService: public ISignatureService {
@@ -7,3 +10,5 @@ namespace securitylib {
 		bool CheckSignature(std::string signed_data, std::string public_key, std::string check_hash);
 	};
 }
+
+#endif

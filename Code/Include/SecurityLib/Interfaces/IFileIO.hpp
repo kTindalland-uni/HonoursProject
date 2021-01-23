@@ -1,3 +1,6 @@
+#ifndef __IFILEIO
+#define __IFILEIO
+
 #include <string>
 #include <SecurityLib/Structures/SecurityConfiguration.hpp>
 
@@ -7,3 +10,5 @@ namespace securitylib {
 		virtual void WriteConfiguration(SecurityConfiguration config, std::string filepath) = 0;
 	};
 }
+
+#endif

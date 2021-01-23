@@ -1,3 +1,0 @@
-/home/kai/HonoursProject/Code/SecurityLib/out/CMakeFiles/rebuild_cache.dir
-/home/kai/HonoursProject/Code/SecurityLib/out/CMakeFiles/securitylib.dir
-/home/kai/HonoursProject/Code/SecurityLib/out/CMakeFiles/edit_cache.dir

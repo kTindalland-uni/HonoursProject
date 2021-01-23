@@ -1,3 +1,6 @@
+#ifndef __SECSERVFAC
+#define __SECSERVFAC
+
 #include <string>
 #include <SecurityLib/Interfaces/IEncryptionService.hpp>
 #include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
@@ -16,5 +19,4 @@ namespace securitylib {
 	};
 }
 
-
-
+#endif
