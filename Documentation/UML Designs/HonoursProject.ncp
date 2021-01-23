@@ -8,10 +8,10 @@
         <Name>IEncryptionService</Name>
         <Access>Public</Access>
         <Location left="685" top="571" />
-        <Size width="287" height="216" />
+        <Size width="248" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">string EncryptData(string key, string data)</Member>
-        <Member type="Method">string DecryptData(string key, string data)</Member>
+        <Member type="Method">Data EncryptData(string key, Data data)</Member>
+        <Member type="Method">Data DecryptData(string key, Data data)</Member>
       </Entity>
       <Entity type="Interface">
         <Name>IKeyExchangeService</Name>
@@ -31,16 +31,26 @@
         <Member type="Method">string SignData(string data, string private_key)</Member>
         <Member type="Method">bool CheckSignature(string signed_data, string public_key, string check_hash)</Member>
       </Entity>
+      <Entity type="Structure">
+        <Name>Data</Name>
+        <Access>Public</Access>
+        <Location left="550" top="284" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public char data_pointer</Member>
+        <Member type="Field">public int byte_count</Member>
+      </Entity>
       <Entity type="Interface">
         <Name>ISecurityServiceFactory</Name>
         <Access>Public</Access>
-        <Location left="629" top="999" />
+        <Location left="629" top="992" />
         <Size width="361" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">IEncryptionService MakeEncryptionService(string method)</Member>
         <Member type="Method">IKeyExchangeService MakeKeyExchangeService(string method)</Member>
         <Member type="Method">ISignatureService MakeSignatureService(string method)</Member>
         <Member type="Method">IHashingService MakeHashingService(string method)</Member>
+        <Member type="Method">ISymmetricKeyGenerationService MakeKeyGenerationService(string method)</Member>
       </Entity>
       <Entity type="Class">
         <Name>SecurityServiceFactory</Name>
@@ -52,6 +62,7 @@
         <Member type="Method">public IKeyExchangeService MakeKeyExchangeService(string method)</Member>
         <Member type="Method">public ISignatureService MakeSignatureService(string method)</Member>
         <Member type="Method">public IHashingService MakeHashingService(string method)</Member>
+        <Member type="Method">public ISymmetricKeyGenerationService MakeKeyGenerationService(string method)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Interface">
@@ -65,16 +76,16 @@
       <Entity type="Class">
         <Name>AesEncryptionService</Name>
         <Access>Public</Access>
-        <Location left="685" top="284" />
-        <Size width="287" height="216" />
+        <Location left="736" top="284" />
+        <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public string EncryptData(string key, string data)</Member>
-        <Member type="Method">public string DecryptData(string key, string data)</Member>
+        <Member type="Method">public Data EncryptData(string key, Data data)</Member>
+        <Member type="Method">public Data DecryptData(string key, Data data)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Comment">
         <Text>Service will implement IEncryptionService based on the AES library.</Text>
-        <Location left="992" top="284" />
+        <Location left="940" top="350" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Class">
@@ -89,7 +100,7 @@
       </Entity>
       <Entity type="Comment">
         <Text>DHKeyExchangeService will implement Key Exchange using the diffie helman protocol.</Text>
-        <Location left="1139" top="403" />
+        <Location left="1139" top="350" />
         <Size width="160" height="75" />
       </Entity>
       <Entity type="Class">
@@ -120,7 +131,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>SecurityService</Name>
         <Access>Public</Access>
-        <Location left="1326" top="1020" />
+        <Location left="1326" top="992" />
         <Size width="382" height="436" />
         <Collapsed>False</Collapsed>
         <Member type="Field">public readonly IEncryptionService encryption_service</Member>
@@ -178,7 +189,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Interface">
         <Name>IFileIO</Name>
         <Access>Public</Access>
-        <Location left="1851" top="1334" />
+        <Location left="1798" top="1499" />
         <Size width="381" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">SecurityConfiguration ReadConfiguration(string filepath)</Member>
@@ -187,7 +198,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>XMLFileIO</Name>
         <Access>Public</Access>
-        <Location left="2443" top="1334" />
+        <Location left="2390" top="1499" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public SecurityConfiguration ReadConfiguration(string filepath)</Member>
@@ -196,48 +207,48 @@ This should make it easier to roll out new versions of the code.</Text>
       </Entity>
     </Entities>
     <Relationships>
-      <Relationship type="Realization" first="4" second="3">
+      <Relationship type="Realization" first="5" second="4">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Realization" first="6" second="0">
+      <Relationship type="Realization" first="7" second="0">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Realization" first="8" second="1">
+      <Relationship type="Realization" first="9" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Realization" first="10" second="5">
+      <Relationship type="Realization" first="11" second="6">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Realization" first="11" second="2">
+      <Relationship type="Realization" first="12" second="2">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Association" first="13" second="0">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Composition</AssociationType>
-        <EndMultiplicity>1</EndMultiplicity>
-      </Relationship>
-      <Relationship type="Association" first="13" second="1">
+      <Relationship type="Association" first="14" second="0">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
-      <Relationship type="Association" first="13" second="2">
+      <Relationship type="Association" first="14" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
-      <Relationship type="Association" first="13" second="5">
+      <Relationship type="Association" first="14" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Composition</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="14" second="6">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -245,18 +256,18 @@ This should make it easier to roll out new versions of the code.</Text>
         <StartMultiplicity>1</StartMultiplicity>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
-      <Relationship type="Realization" first="15" second="14">
+      <Relationship type="Realization" first="16" second="15">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Association" first="13" second="14">
+      <Relationship type="Association" first="14" second="15">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Composition</AssociationType>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
-      <Relationship type="Realization" first="20" second="19">
+      <Relationship type="Realization" first="21" second="20">
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
