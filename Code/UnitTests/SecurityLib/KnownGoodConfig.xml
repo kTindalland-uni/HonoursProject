@@ -1,0 +1,3 @@
+<SecConfig>
+	<HashingMethod Method="SHA3" />
+</SecConfig>

@@ -7,8 +7,9 @@
 
 namespace securitylib {
 	class XMLFileIO: public IFileIO {
-		SecurityConfiguration ReadConfiguration(std::string filepath);
-		void WriteConfiguration(SecurityConfiguration config, std::string filepath);
+		public:
+			SecurityConfiguration ReadConfiguration(std::string filepath);
+			void WriteConfiguration(SecurityConfiguration config, std::string filepath);
 	};
 }
 
