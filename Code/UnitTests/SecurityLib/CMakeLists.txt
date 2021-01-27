@@ -29,3 +29,4 @@ add_test (
 )
 
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
+configure_file(Config.xml Config.xml COPYONLY)

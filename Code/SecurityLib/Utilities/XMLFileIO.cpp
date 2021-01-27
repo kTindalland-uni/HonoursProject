@@ -31,6 +31,20 @@ namespace securitylib {
 	}
 
 	void XMLFileIO::WriteConfiguration(SecurityConfiguration config, std::string filepath) {
-		
+		pugi::xml_document doc;
+		pugi::xml_parse_result result = doc.load_file(filepath.c_str());
+
+		if (!result) {
+			// TODO: Handle invalid xml document
+		}
+
+		auto config_node = doc.child("SecConfig");
+
+		config_node.child("Hashing").remove_attribute("Method");
+		config_node.child("Hashing").append_attribute("Method") = config.HashingMethod.c_str();
+
+		doc.save_file(filepath.c_str(), PUGIXML_TEXT("	"));
+
+
 	}
 }
