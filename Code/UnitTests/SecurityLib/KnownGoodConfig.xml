@@ -1,3 +1,7 @@
 <SecConfig>
-	<HashingMethod Method="SHA3" />
+	<Hashing Method="SHA3" />
+	<Encryption Method="AES" />
+	<KeyExchange Method="Diffie-Helman" />
+	<Signature Method="Default" />
+	<KeyGeneration Method="Eliptic-Curve" />
 </SecConfig>

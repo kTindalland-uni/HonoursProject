@@ -15,12 +15,22 @@ namespace securitylib {
 			// TODO: Handle invalid xml document.
 		}
 
-		result_config.HashingMethod = doc.child("SecConfig").child("HashingMethod").attribute("Method").value();
+		auto config = doc.child("SecConfig");
+
+		result_config.HashingMethod = config.child("Hashing").attribute("Method").value();
+
+		result_config.EncryptionMethod = config.child("Encryption").attribute("Method").value();
+
+		result_config.KeyExchangeMethod = config.child("KeyExchange").attribute("Method").value();
+
+		result_config.SignatureMethod = config.child("KeyExchange").attribute("Method").value();
+
+		result_config.SymmetricKeyGenerationMethod = config.child("KeyGeneration").attribute("Method").value();
 
 		return result_config;
 	}
 
 	void XMLFileIO::WriteConfiguration(SecurityConfiguration config, std::string filepath) {
-
+		
 	}
 }
