@@ -36,7 +36,13 @@ namespace securitylib {
 	}
 
 	ISignatureService* SecurityServiceFactory::MakeSignatureService(std::string method) {
-		return new SignatureService();
+		if (method == "Default") {
+			return new SignatureService();
+		}
+		else {
+			return new SignatureService();
+		}
+		
 	}
 
 

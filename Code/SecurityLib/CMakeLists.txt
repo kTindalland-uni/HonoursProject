@@ -3,11 +3,16 @@ cmake_minimum_required(VERSION 3.13.4)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories("../cryptopp")
+include_directories("../pugixml/src")
 include_directories("../Include")
 
 add_library(crypto_pp STATIC IMPORTED)
 set_target_properties(crypto_pp PROPERTIES
 	IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/Code/cryptopp/libcryptopp.a)
+
+#add_library(pugixml STATIC IMPORTED)
+#set_target_properties(pugixml PROPERTIES
+#		IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/build/Code/pugixml/libpugixml.a)
 
 set(Sources
 	Factories/SecurityServiceFactory.cpp
@@ -22,4 +27,4 @@ set(Sources
 )
 
 add_library(security ${Sources})
-target_link_libraries(security crypto_pp)
+target_link_libraries(security crypto_pp pugixml-static)

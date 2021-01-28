@@ -13,3 +13,20 @@ add_test (
 	NAME SHA3Hashing
 	COMMAND SHA3HashingUnitTests
 )
+
+# XML File IO Tests
+add_executable(XMLFileIOUnitTests XMLFileTesting.cpp)
+
+target_link_libraries(XMLFileIOUnitTests PUBLIC
+	gtest_main
+	security
+	pugixml-static
+)
+
+add_test (
+	NAME XMLFileIO
+	COMMAND XMLFileIOUnitTests
+)
+
+configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
+configure_file(Config.xml Config.xml COPYONLY)

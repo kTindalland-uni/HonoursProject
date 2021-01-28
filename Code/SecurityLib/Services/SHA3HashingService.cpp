@@ -12,7 +12,6 @@ namespace securitylib {
 		std::string result;
 		CryptoPP::HexEncoder encoder(new CryptoPP::StringSink(result));
 
-
 		CryptoPP::SHA3_256 hash;
 
 		std::string digest;
