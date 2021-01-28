@@ -43,6 +43,18 @@ namespace securitylib {
 		config_node.child("Hashing").remove_attribute("Method");
 		config_node.child("Hashing").append_attribute("Method") = config.HashingMethod.c_str();
 
+		config_node.child("Encryption").remove_attribute("Method");
+		config_node.child("Encryption").append_attribute("Method") = config.EncryptionMethod.c_str();
+
+		config_node.child("KeyExchange").remove_attribute("Method");
+		config_node.child("KeyExchange").append_attribute("Method") = config.KeyExchangeMethod.c_str();
+
+		config_node.child("Signature").remove_attribute("Method");
+		config_node.child("Signature").append_attribute("Method") = config.SignatureMethod.c_str();
+
+		config_node.child("KeyGeneration").remove_attribute("Method");
+		config_node.child("KeyGeneration").append_attribute("Method") = config.SymmetricKeyGenerationMethod.c_str();
+
 		doc.save_file(filepath.c_str(), PUGIXML_TEXT("	"));
 
 
