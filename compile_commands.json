@@ -1,82 +1,87 @@
 [
 {
-  "directory": "/home/kai/HonoursProject/build/Code/pugixml",
+  "directory": "/home/kai/HonoursProject/Code/pugixml",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/pugixml/src  -g -fPIC   -std=gnu++17 -o CMakeFiles/pugixml-static.dir/src/pugixml.cpp.o -c /home/kai/HonoursProject/Code/pugixml/src/pugixml.cpp",
   "file": "/home/kai/HonoursProject/Code/pugixml/src/pugixml.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Factories/SecurityServiceFactory.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Factories/SecurityServiceFactory.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Factories/SecurityServiceFactory.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/AESEncryptionService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/AESEncryptionService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/AESEncryptionService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/SecurityService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/SecurityService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/SecurityService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/DiffieHelmanKeyExchangeService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/DiffieHelmanKeyExchangeService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/DiffieHelmanKeyExchangeService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/SHA3HashingService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/SHA3HashingService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/SHA3HashingService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/ElipticCurveKeyGenerationService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/ElipticCurveKeyGenerationService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/ElipticCurveKeyGenerationService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Services/SignatureService.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Services/SignatureService.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Services/SignatureService.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Utilities/ConfigurationGenerator.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Utilities/ConfigurationGenerator.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Utilities/ConfigurationGenerator.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/SecurityLib/../cryptopp -I/home/kai/HonoursProject/Code/SecurityLib/../pugixml/src -I/home/kai/HonoursProject/Code/SecurityLib/../Include -I/home/kai/HonoursProject/Code/pugixml/src  -g   -std=gnu++17 -o CMakeFiles/security.dir/Utilities/XMLFileIO.cpp.o -c /home/kai/HonoursProject/Code/SecurityLib/Utilities/XMLFileIO.cpp",
   "file": "/home/kai/HonoursProject/Code/SecurityLib/Utilities/XMLFileIO.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/googletest/googlemock",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock",
   "command": "/usr/bin/c++   -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/src/gmock_main.cc",
   "file": "/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/src/gmock_main.cc"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/googletest/googlemock",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/include -I/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/src/gmock-all.cc",
   "file": "/home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/src/gmock-all.cc"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/googletest/googletest",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/googletest/googletest",
   "command": "/usr/bin/c++   -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/src/gtest_main.cc",
   "file": "/home/kai/HonoursProject/Code/UnitTests/googletest/googletest/src/gtest_main.cc"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/googletest/googletest",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/googletest/googletest",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -I/home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17 -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/src/gtest-all.cc",
   "file": "/home/kai/HonoursProject/Code/UnitTests/googletest/googletest/src/gtest-all.cc"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/XMLFileIOUnitTests.dir/XMLFileTesting.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/XMLFileTesting.cpp",
   "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/XMLFileTesting.cpp"
 },
 {
-  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/SHA3HashingUnitTests.dir/SHA3HashingTests.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/SHA3HashingTests.cpp",
   "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/SHA3HashingTests.cpp"
+},
+{
+  "directory": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib",
+  "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/ConfigGeneratorUnitTests.dir/ConfigGeneratorTests.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/ConfigGeneratorTests.cpp",
+  "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/ConfigGeneratorTests.cpp"
 }
 ]

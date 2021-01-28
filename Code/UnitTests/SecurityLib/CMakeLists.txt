@@ -28,5 +28,18 @@ add_test (
 	COMMAND XMLFileIOUnitTests
 )
 
+# Config generator
+add_executable(ConfigGeneratorUnitTests ConfigGeneratorTests.cpp Mocks/FileIOMock.hpp)
+
+target_link_libraries(ConfigGeneratorUnitTests PUBLIC
+	gmock_main
+	security
+)
+
+add_test (
+	NAME ConfigGenerator
+	COMMAND ConfigGeneratorUnitTests
+)
+
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
 configure_file(Config.xml Config.xml COPYONLY)
