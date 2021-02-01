@@ -6,10 +6,6 @@ include_directories("../cryptopp")
 include_directories("../pugixml/src")
 include_directories("../Include")
 
-add_library(crypto_pp STATIC IMPORTED)
-set_target_properties(crypto_pp PROPERTIES
-	IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/Code/cryptopp/libcryptopp.a)
-
 #add_library(pugixml STATIC IMPORTED)
 #set_target_properties(pugixml PROPERTIES
 #		IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/build/Code/pugixml/libpugixml.a)

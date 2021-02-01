@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13.4)
 
-include_directories(${CMAKE_SOURCE_DIR}/Code/Include)
+include_directories(${CMAKE_SOURCE_DIR}/Code/Include ${CMAKE_SOURCE_DIR}/Code/cryptopp)
 
 add_executable(SHA3HashingUnitTests SHA3HashingTests.cpp)
 
@@ -39,6 +39,20 @@ target_link_libraries(ConfigGeneratorUnitTests PUBLIC
 add_test (
 	NAME ConfigGenerator
 	COMMAND ConfigGeneratorUnitTests
+)
+
+# Key Gen
+add_executable(KeyGenerationUnitTests ElipticCurveKeyGenerationUnitTests.cpp)
+
+target_link_libraries(KeyGenerationUnitTests PUBLIC
+	gtest_main
+	security
+	crypto_pp
+)
+
+add_test(
+	NAME ElipticCurveKeyGen
+	COMMAND KeyGenerationUnitTests
 )
 
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
