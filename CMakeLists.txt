@@ -7,4 +7,8 @@ set(CMAKE_CXX_STANDARD 17) # Use C++17
 
 enable_testing()
 
+add_library(crypto_pp STATIC IMPORTED)
+set_target_properties(crypto_pp PROPERTIES
+	IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/Code/cryptopp/libcryptopp.a)
+
 add_subdirectory(Code)
