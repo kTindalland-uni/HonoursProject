@@ -55,5 +55,19 @@ add_test(
 	COMMAND KeyGenerationUnitTests
 )
 
+# Signature Service
+add_executable(SignatureServiceTests SignatureServiceUnitTests.cpp TestFixtures/SignatureServiceTest.hpp)
+
+target_link_libraries(SignatureServiceTests PUBLIC
+	gtest_main
+	security
+	crypto_pp
+)
+
+add_test(
+	NAME SignatureServiceTests
+	COMMAND SignatureServiceUnitTests
+)
+
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
 configure_file(Config.xml Config.xml COPYONLY)

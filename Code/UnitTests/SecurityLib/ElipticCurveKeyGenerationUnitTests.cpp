@@ -6,7 +6,7 @@
 #include <oids.h>
 #include <osrng.h>
 #include <filters.h>
-
+#include "TestFixtures/SignatureServiceTest.hpp"
 
 TEST(ElipticCurveUnitTests, SunnyDay) {
 	// Arrange

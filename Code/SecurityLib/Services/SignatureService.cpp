@@ -27,7 +27,7 @@ namespace securitylib {
 		return signature;
 	}
 
-	bool CheckSignature(std::string signed_data, std::string public_key, std::string check_hash) {
+	bool SignatureService::CheckSignature(std::string signed_data, std::string public_key, std::string check_hash) {
 		// Load in public key
 		CryptoPP::ECDSA<CryptoPP::ECP, CryptoPP::SHA256>::PublicKey publicKey;
 		CryptoPP::StringSource key_source(public_key, true);
