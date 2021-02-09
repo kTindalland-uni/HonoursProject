@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make -C build/ -B
+make -C build/ -B -j8
