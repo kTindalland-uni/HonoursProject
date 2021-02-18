@@ -69,5 +69,18 @@ add_test(
 	COMMAND SignatureServiceUnitTests
 )
 
+# Diffie Helman
+add_executable(DiffieHelmanTests DiffieHelmanTests.cpp)
+
+target_link_libraries(DiffieHelmanTests PUBLIC
+	gtest_main
+	security
+)
+
+add_test(
+	NAME DiffieHelmanTests
+	COMMAND DiffieHelmanTests
+)
+
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
 configure_file(Config.xml Config.xml COPYONLY)

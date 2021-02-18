@@ -45,8 +45,10 @@ namespace securitylib {
 		CryptoPP::SecByteBlock public_key(dh.PublicKeyLength());
 		dh.GenerateKeyPair(prng, private_key, public_key);
 
+		// THIS SEG FAULTS ===========
 		privKey = reinterpret_cast<const char*>(&private_key[0], private_key.size());
 		pubKey = reinterpret_cast<const char*>(&public_key[0], public_key.size());
+		// ===========================
 	}
 
 	std::string DiffieHelmanKeyExchangeService::GenerateFinalKey(std::string privA, std::string pubB) {
@@ -55,7 +57,7 @@ namespace securitylib {
 		// Initialise shared byte block
 		CryptoPP::SecByteBlock shared(dh.AgreedValueLength());
 
-		// Load the keys into byte blocks.
+		// Load the keys into byte blocks. Probably seg faults...
 		CryptoPP::SecByteBlock privABytes(reinterpret_cast<const CryptoPP::byte*>(&privA[0]), privA.size());
 		CryptoPP::SecByteBlock pubBBytes(reinterpret_cast<const CryptoPP::byte*>(&pubB[0]), pubB.size());
 
