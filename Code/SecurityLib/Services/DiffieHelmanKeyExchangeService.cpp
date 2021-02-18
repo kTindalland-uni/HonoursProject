@@ -28,6 +28,7 @@ namespace securitylib {
 		q = CryptoPP::Integer("0xF518AA8781A8DF278ABA4E7D64B7CB9D49462353");
 
 		dh = CryptoPP::DH();
+
 	}
 
 	void DiffieHelmanKeyExchangeService::GenerateIntermediateKeys(std::string& privKey, std::string& pubKey) {

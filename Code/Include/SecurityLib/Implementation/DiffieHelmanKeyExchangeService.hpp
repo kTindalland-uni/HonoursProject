@@ -20,6 +20,7 @@ namespace securitylib {
 			CryptoPP::Integer q;
 			CryptoPP::DH dh;
 
+
 	};
 }
 
