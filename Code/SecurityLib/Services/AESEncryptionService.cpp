@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <SecurityLib/Implementation/AESEncryptionService.hpp>
-#include "filters.h"
-#include "aes.h"
-#include "cfb.h"
-#include "secblock.h"
+#include <filters.h>
+#include <aes.h>
+#include <secblock.h>
+#include <modes.h>
+#include <cstring>
 
 namespace securitylib {
 
@@ -13,24 +14,30 @@ namespace securitylib {
 		CryptoPP::SecByteBlock key_block(reinterpret_cast<const CryptoPP::byte*>(&key[0]), key.size());
 		
 		// Turn the initialisation vector into a secure byte block.
-		CryptoPP::SecByteBlock iv_block(reinterpret_cast<const CryptoPP::byte*>(&iv[0]), iv.size())
+		CryptoPP::SecByteBlock iv_block(reinterpret_cast<const CryptoPP::byte*>(&iv[0]), iv.size());
 
-		std::string ciphertext;
+        CryptoPP::byte plainText[data.size()];
+        std::memcpy(&data[0], &plainText[0], data.size());
 
-		CryptoPP::CFB_Mode<CryptoPP::AES>::Encryption enc;
-		enc.SetKeyWithIV(key_block, key_block.size(), iv_block);
+		CryptoPP::byte ciphertext[data.size()];
 
-		CryptoPP::StringSource source(data, true,
-			new CryptoPP::StreamTransformation(enc,
-				new CryptoPP::StringSink(ciphertext)
-			)
-		);
+        // Create encryptor with instance of AES block cipher
+        CryptoPP::CFB_Mode<CryptoPP::AES>::Encryption encryptor(key_block, key_block.size(), iv_block);
+        encryptor.ProcessData(ciphertext, plainText, data.size());
 
-		return ciphertext;
+        std::string result;
+        result.resize(data.size());
+
+        std::memcpy(&result[0], &ciphertext[0], result.size());
+
+
+		return result;
 	}
 
 	std::string AESEncryptionService::DecryptData(std::string key, std::string iv, std::string data) {
 		std::cout << "Hello world!\n";
-		return "Hello";
+		std::string result = "Hello";
+
+		return result;
 	}
 }
