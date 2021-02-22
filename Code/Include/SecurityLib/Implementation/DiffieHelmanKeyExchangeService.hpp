@@ -2,12 +2,25 @@
 #define __DIFHELHEYEXSERV
 
 #include <SecurityLib/Interfaces/IKeyExchangeService.hpp>
+#include <tuple>
+#include <integer.h>
+#include <dh.h>
+#include <string>
 
 namespace securitylib {
 	class DiffieHelmanKeyExchangeService: public IKeyExchangeService {
 		public:
-			int GenerateIntermediateKey(int common_secret, int private_secret);
-			int GenerateFinalKey(int swapped_secret, int private_secret);
+			DiffieHelmanKeyExchangeService();
+			void GenerateIntermediateKeys(std::string& privKey, std::string& pubKey);
+			std::string GenerateFinalKey(std::string swapped_secret, std::string private_secret);
+
+		private:
+			CryptoPP::Integer p;
+			CryptoPP::Integer g;
+			CryptoPP::Integer q;
+			CryptoPP::DH dh;
+
+
 	};
 }
 
