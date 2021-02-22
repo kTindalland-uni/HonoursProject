@@ -5,6 +5,7 @@ TEST(DiffieHelmanTesting, SunnyDay) {
     // Arrange
     securitylib::DiffieHelmanKeyExchangeService dhA;
     securitylib::DiffieHelmanKeyExchangeService dhB;
+
     std::string privA, pubA, privB, pubB, resultA, resultB;
 
     // Act

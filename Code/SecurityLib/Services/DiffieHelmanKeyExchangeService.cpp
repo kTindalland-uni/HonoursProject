@@ -6,6 +6,7 @@
 #include <integer.h>
 #include <stdexcept>
 #include <string>
+#include <cstring>
 
 namespace securitylib {
 	DiffieHelmanKeyExchangeService::DiffieHelmanKeyExchangeService() {
@@ -41,14 +42,18 @@ namespace securitylib {
 			throw std::runtime_error("Failed to validate prime and generator.");
 		}
 
+        // Generate key pair
 		CryptoPP::SecByteBlock private_key(dh.PrivateKeyLength());
 		CryptoPP::SecByteBlock public_key(dh.PublicKeyLength());
 		dh.GenerateKeyPair(prng, private_key, public_key);
 
-		// THIS SEG FAULTS ===========
-		privKey = reinterpret_cast<const char*>(&private_key[0], private_key.size());
-		pubKey = reinterpret_cast<const char*>(&public_key[0], public_key.size());
-		// ===========================
+        // Save the key to a std::string
+		privKey.resize(private_key.size());
+		std::memcpy(&privKey[0], &private_key[0], privKey.size());
+
+		pubKey.resize(public_key.size());
+		std::memcpy(&pubKey[0], &public_key[0], pubKey.size());
+
 	}
 
 	std::string DiffieHelmanKeyExchangeService::GenerateFinalKey(std::string privA, std::string pubB) {
@@ -67,7 +72,7 @@ namespace securitylib {
 
 		// Save the shared secret to a string.
 		std::string result(reinterpret_cast<const char*>(&shared[0]), shared.size());
-		
+
 		return result;
 	}
 }
