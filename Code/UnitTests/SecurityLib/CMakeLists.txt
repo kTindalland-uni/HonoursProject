@@ -95,5 +95,18 @@ add_test(
 	COMMAND AESEncryptionTests
 )
 
+# SecService
+add_executable(SecurityServiceTests SecurityServiceTests.cpp)
+
+target_link_libraries(SecurityServiceTests PUBLIC
+	gtest_main
+	security
+)
+
+add_test(
+	NAME SecurityServiceTests
+	COMMAND SecurityServiceTests
+)
+
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
 configure_file(Config.xml Config.xml COPYONLY)

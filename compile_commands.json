@@ -91,6 +91,11 @@
 },
 {
   "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
+  "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/cryptopp -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/SecurityServiceTests.dir/SecurityServiceTests.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/SecurityServiceTests.cpp",
+  "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/SecurityServiceTests.cpp"
+},
+{
+  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/cryptopp -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googlemock -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/ConfigGeneratorUnitTests.dir/ConfigGeneratorTests.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/ConfigGeneratorTests.cpp",
   "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/ConfigGeneratorTests.cpp"
 },
