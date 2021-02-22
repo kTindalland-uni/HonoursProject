@@ -82,5 +82,18 @@ add_test(
 	COMMAND DiffieHelmanTests
 )
 
+# AES
+add_executable(AESEncryptionTests AESEncryptionTests.cpp)
+
+target_link_libraries(AESEncryptionTests PUBLIC
+	gtest_main
+	security
+)
+
+add_test(
+	NAME AESEncryptionTests
+	COMMAND AESEncryptionTests
+)
+
 configure_file(KnownGoodConfig.xml KnownGoodConfig.xml COPYONLY)
 configure_file(Config.xml Config.xml COPYONLY)

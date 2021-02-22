@@ -71,6 +71,11 @@
 },
 {
   "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
+  "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/cryptopp -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/AESEncryptionTests.dir/AESEncryptionTests.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/AESEncryptionTests.cpp",
+  "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/AESEncryptionTests.cpp"
+},
+{
+  "directory": "/home/kai/HonoursProject/build/Code/UnitTests/SecurityLib",
   "command": "/usr/bin/c++   -I/home/kai/HonoursProject/Code/Include -I/home/kai/HonoursProject/Code/cryptopp -I/home/kai/HonoursProject/Code/pugixml/src -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest/include -isystem /home/kai/HonoursProject/Code/UnitTests/googletest/googletest  -g   -std=gnu++17 -o CMakeFiles/XMLFileIOUnitTests.dir/XMLFileTesting.cpp.o -c /home/kai/HonoursProject/Code/UnitTests/SecurityLib/XMLFileTesting.cpp",
   "file": "/home/kai/HonoursProject/Code/UnitTests/SecurityLib/XMLFileTesting.cpp"
 },

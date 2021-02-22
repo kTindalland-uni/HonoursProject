@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <SecurityLib/Implementation/DiffieHelmanKeyExchangeService.hpp>
+#include <iostream>
 
 TEST(DiffieHelmanTesting, SunnyDay) {
     // Arrange

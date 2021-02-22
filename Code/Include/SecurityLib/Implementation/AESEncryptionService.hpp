@@ -6,8 +6,9 @@
 
 namespace securitylib {
 	class AESEncryptionService: public IEncryptionService {
-		std::string EncryptData(std::string key, std::string data);
-		std::string DecryptData(std::string key, std::string data);
+		public:
+			std::string EncryptData(std::string key, std::string iv, std::string data);
+			std::string DecryptData(std::string key, std::string iv, std::string data);
 	};
 }
 
