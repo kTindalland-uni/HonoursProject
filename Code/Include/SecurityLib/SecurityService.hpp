@@ -14,6 +14,9 @@ namespace securitylib {
 			// Constructor
 			SecurityService(SecurityConfiguration config);
 
+			// Destructor
+			~SecurityService();
+
 			// Public Fields
 			IEncryptionService* encryptionService;
 			IHashingService* hashingService;
