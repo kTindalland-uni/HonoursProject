@@ -16,28 +16,39 @@ namespace securitylib {
 		// Turn the initialisation vector into a secure byte block.
 		CryptoPP::SecByteBlock iv_block(reinterpret_cast<const CryptoPP::byte*>(&iv[0]), iv.size());
 
-        CryptoPP::byte plainText[data.size()];
-        std::memcpy(&data[0], &plainText[0], data.size());
-
-		CryptoPP::byte ciphertext[data.size()];
+		std::string ciphertext;
 
         // Create encryptor with instance of AES block cipher
         CryptoPP::CFB_Mode<CryptoPP::AES>::Encryption encryptor(key_block, key_block.size(), iv_block);
-        encryptor.ProcessData(ciphertext, plainText, data.size());
 
-        std::string result;
-        result.resize(data.size());
+        CryptoPP::StringSource(data, true,
+        new CryptoPP::StreamTransformationFilter(encryptor,
+            new CryptoPP::StringSink(ciphertext)
+            )
+        );
 
-        std::memcpy(&result[0], &ciphertext[0], result.size());
+        return ciphertext;
 
-
-		return result;
 	}
 
 	std::string AESEncryptionService::DecryptData(std::string key, std::string iv, std::string data) {
-		std::cout << "Hello world!\n";
-		std::string result = "Hello";
+		// Turn the key into a secure byte block
+		CryptoPP::SecByteBlock key_block(reinterpret_cast<const CryptoPP::byte*>(&key[0]), key.size());
 
-		return result;
+		// Turn the initialisation vector into a secure byte block.
+		CryptoPP::SecByteBlock iv_block(reinterpret_cast<const CryptoPP::byte*>(&iv[0]), iv.size());
+
+		std::string plaintext;
+
+        // Create decryptor with instance of AES block cipher
+        CryptoPP::CFB_Mode<CryptoPP::AES>::Decryption decryptor(key_block, key_block.size(), iv_block);
+
+        CryptoPP::StringSource(data, true,
+        new CryptoPP::StreamTransformationFilter(decryptor,
+            new CryptoPP::StringSink(plaintext)
+            )
+        );
+
+        return plaintext;
 	}
 }
