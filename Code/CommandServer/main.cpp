@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void EchoTest();
+void EchoTest(const int clientSocket);
 
 int main(int argc, char *argv[]) {
 
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     while (true) {
         const int clientSocket = tcpServer.Listen();
 
-        thread t(EchoTest);
+        thread t(EchoTest, clientSocket);
 
         threads.push_back(move(t));
     }
@@ -32,6 +32,6 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void EchoTest() {
-    cout << "Hello world! Socket ID:" << endl;
+void EchoTest(const int clientSocket) {
+    cout << "Hello world! Socket ID: " << clientSocket << endl;
 }
