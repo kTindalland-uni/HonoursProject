@@ -13,12 +13,12 @@ int main(int argc, char *argv[]) {
 
     auto tcpServer = cmdserv::TcpServer();
 
-    vector<thread> threads(5);
+    vector<thread> threads(0);
 
     while (true) {
         const int clientSocket = tcpServer.Listen();
 
-        thread t(EchoTest, clientSocket);
+        thread t(&cmdserv::TcpServer::EchoTest, &tcpServer, clientSocket);
 
         threads.push_back(move(t));
     }
@@ -30,8 +30,4 @@ int main(int argc, char *argv[]) {
     // tcpServer.EchoTest(clientSocket);
 
     return 0;
-}
-
-void EchoTest(const int clientSocket) {
-    cout << "Hello world! Socket ID: " << clientSocket << endl;
 }
