@@ -23,7 +23,7 @@ namespace cmdserv {
         // Bind ip addr and port to socket
         sockaddr_in hint;
         hint.sin_family = AF_INET;
-        hint.sin_port = htons(54000); // Host to network short
+        hint.sin_port = htons(56000); // Host to network short
         inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr); // Char Pointer to numbers
 
         bind(listeningSocket, (sockaddr*)&hint, sizeof(hint));
@@ -80,7 +80,14 @@ namespace cmdserv {
                 break;
             }
 
-            cout << string(buffer, 0, bytesReceived) << endl;
+            string receivedText(buffer, 0, bytesReceived);
+
+            if (receivedText.compare(0, 11, "Hello there") == 0) {
+                cout << "General Kenobi" << endl;
+            }
+            else  {
+                cout << "Received: " << receivedText << endl;
+            }
 
             // Echo message back.
             send(clientSocket, buffer, bytesReceived + 1, 0);
