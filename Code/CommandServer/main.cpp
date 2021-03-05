@@ -5,8 +5,6 @@
 
 using namespace std;
 
-void EchoTest(const int clientSocket);
-
 int main(int argc, char *argv[]) {
 
     cout << "Entered main function." << endl;
@@ -27,7 +25,7 @@ int main(int argc, char *argv[]) {
         threads[i].join();
     }
 
-    // tcpServer.EchoTest(clientSocket);
+    
 
     return 0;
 }
