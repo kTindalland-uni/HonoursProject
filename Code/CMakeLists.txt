@@ -4,5 +4,6 @@ add_subdirectory(pugixml)
 add_subdirectory(SecurityLib)
 add_subdirectory(MessageLib)
 add_subdirectory(CommandServer)
+add_subdirectory(Client)
 
 add_subdirectory(UnitTests)

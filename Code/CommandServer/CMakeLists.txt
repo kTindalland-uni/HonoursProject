@@ -5,4 +5,4 @@ find_package(Threads REQUIRED)
 include_directories(../Include)
 add_executable(CommandServer main.cpp TcpServer.cpp)
 
-target_link_libraries(CommandServer PRIVATE Threads::Threads)
+target_link_libraries(CommandServer PRIVATE Threads::Threads messages)

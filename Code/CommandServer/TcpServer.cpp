@@ -9,6 +9,8 @@
 
 #include <CommandServer/TcpServer.hpp>
 
+#include <MessageLib/StartTransMessage.hpp>
+
 using namespace std;
 
 namespace cmdserv {
@@ -65,32 +67,31 @@ namespace cmdserv {
     void TcpServer::EchoTest(int clientSocket) {
         char buffer[4096];
 
-        while(true) {
-            memset(buffer, 0, 4096);
+        memset(buffer, 0, 4096);
 
-            // Wait for client to send data.
-            int bytesReceived = recv(clientSocket, buffer, 4096, 0);
-            if (bytesReceived == -1) {
-                cerr << "Error in recv()." << endl;
-                break;
-            }
-
-            if (bytesReceived == 0) {
-                cout << "Client disconnected." << endl;
-                break;
-            }
-
-            string receivedText(buffer, 0, bytesReceived);
-
-            if (receivedText.compare(0, 11, "Hello there") == 0) {
-                cout << "General Kenobi" << endl;
-            }
-            else  {
-                cout << "Received: " << receivedText << endl;
-            }
-
-            // Echo message back.
-            send(clientSocket, buffer, bytesReceived + 1, 0);
+        // Wait for client to send data.
+        int bytesReceived = recv(clientSocket, buffer, 4096, 0);
+        if (bytesReceived == -1) {
+            cerr << "Error in recv()." << endl;
+            return;
         }
+
+        if (bytesReceived == 0) {
+            cout << "Client disconnected." << endl;
+            return;
+        }
+
+        msglib::StartTransMessage rx;
+        rx.Unpack((unsigned char*)buffer);
+
+        cout << rx.name << endl;
+
+        // Echo message back.
+        unsigned char rx_buff[4096];
+        rx.Pack(rx_buff);
+
+        send(clientSocket, rx_buff, 4096, 0);
+
+        close(clientSocket);
     }
 }
