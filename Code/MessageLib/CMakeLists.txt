@@ -6,4 +6,4 @@ set(Sources
 )
 
 include_directories(../Include)
-add_library(message ${Sources})
+add_library(messages ${Sources})

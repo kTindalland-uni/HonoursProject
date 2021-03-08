@@ -3,9 +3,8 @@
 
 namespace msglib {
     class IMessage {
-        private:
-            int _messageId;
         public:
+            int messageId;
             virtual void Pack(unsigned char* buffer) = 0;
             virtual void Unpack(unsigned char* buffer) = 0;
 
