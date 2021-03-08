@@ -1,9 +1,12 @@
 [submodule "Code/cryptopp"]
 	path = Code/cryptopp
 	url = https://github.com/weidai11/cryptopp
+	ignore = dirty
 [submodule "Code/UnitTests/googletest"]
 	path = Code/UnitTests/googletest
 	url = https://github.com/google/googletest.git
+	ignore = dirty
 [submodule "Code/pugixml"]
 	path = Code/pugixml
 	url = https://github.com/kTindalland/pugixml.git
+	ignore = dirty
