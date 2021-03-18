@@ -7,7 +7,7 @@ class CommandServer {
         CommandServer();
         void HandleClientConnection(int socket);
     private:
-        void HandleMessage(int messageId);
+        void HandleMessage(int messageId, char* buffer);
         std::shared_ptr<securitylib::SecurityService> sec_service;
 
         std::string public_key;

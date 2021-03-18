@@ -3,6 +3,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(Sources
 	StartTransMessage.cpp
+	RequestMessage.cpp
+	ResponseMessage.cpp
 )
 
 include_directories(../Include)

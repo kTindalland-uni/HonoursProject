@@ -1,4 +1,4 @@
-#include <MessageLib/IMessage.hpp>
+#include <MessageLib/RequestMessage.hpp>
 
 namespace msglib {
     RequestMessage::RequestMessage() {
@@ -11,14 +11,14 @@ namespace msglib {
         request = requestString;
     }
 
-    RequestMessage::Pack(unsigned char* buffer) {
+    void RequestMessage::Pack(unsigned char* buffer) {
         int bufferPos = 0;
         
         bufferPos = IMessage::InsertInt(messageId, buffer, bufferPos);
         IMessage::InsertString(request, buffer, bufferPos);
     }
 
-    RequestMessage::Unpack(unsigned char* buffer) {
+    void RequestMessage::Unpack(unsigned char* buffer) {
         int bufferPos = 0;
 
         bufferPos = IMessage::RetrieveInt(&messageId, buffer, bufferPos);

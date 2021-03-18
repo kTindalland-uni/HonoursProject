@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 
 #include <MessageLib/StartTransMessage.hpp>
+#include <MessageLib/ResponseMessage.hpp>
 #include <iostream>
  
 int main()
@@ -43,10 +44,11 @@ int main()
 
     recv(CreateSocket, buffer, 4096, 0);
 
-    msglib::StartTransMessage rx;
+    msglib::ResponseMessage rx;
     rx.Unpack(buffer);
 
-    std::cout << "MSG: " << rx.name << std::endl;
+    std::cout << "Asked for: " << rx.requestSent << std::endl;
+    std::cout << "Got back: " << rx.response << std::endl;
  
     return 0;
 }

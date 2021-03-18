@@ -1,3 +1,6 @@
+#ifndef __RQSTMSG
+#define __RQSTMSG
+
 #include <MessageLib/IMessage.hpp>
 #include <string>
 
@@ -13,3 +16,5 @@ namespace msglib {
             void Unpack(unsigned char* buffer);
     };
 }
+
+#endif

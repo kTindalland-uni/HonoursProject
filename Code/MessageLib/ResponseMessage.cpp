@@ -4,7 +4,7 @@
 namespace msglib {
     ResponseMessage::ResponseMessage() {
         messageId = 3;
-        requestSent = "UNDEFINED"
+        requestSent = "UNDEFINED";
         response = "UNDEFINED";
     }
 
@@ -14,7 +14,7 @@ namespace msglib {
         response = responseString;
     }
 
-    ResponseMessage::Pack(unsigned char* buffer) {
+    void ResponseMessage::Pack(unsigned char* buffer) {
         int bufferPos = 0;
         
         bufferPos = IMessage::InsertInt(messageId, buffer, bufferPos);
@@ -22,7 +22,7 @@ namespace msglib {
         IMessage::InsertString(response, buffer, bufferPos);
     }
 
-    ResponseMessage::Unpack(unsigned char* buffer) {
+    void ResponseMessage::Unpack(unsigned char* buffer) {
         int bufferPos = 0;
 
         bufferPos = IMessage::RetrieveInt(&messageId, buffer, bufferPos);

@@ -5,9 +5,12 @@
 #include <sys/socket.h>
 #include <memory>
 #include <string>
+#include <unistd.h>
 
 // Message lib
 #include <MessageLib/IMessage.hpp>
+#include <MessageLib/ResponseMessage.hpp>
+#include <MessageLib/StartTransMessage.hpp>
 
 // Sec lib
 #include <SecurityLib/SecurityService.hpp>
@@ -57,11 +60,34 @@ void CommandServer::HandleClientConnection(int socket) {
 
         cout << messageId << endl;
 
-        HandleMessage(messageId);
+        HandleMessage(messageId, buffer);
 
+        send(socket, buffer, bufferLen, 0);
     }
+
+    close(socket);
 }
 
-void CommandServer::HandleMessage(int messageId) {
-    cout << "Got here!" << endl;
+void CommandServer::HandleMessage(int messageId, char* buffer) {
+    switch (messageId) {
+        case 1: {// Start transaction message
+
+            // Take the name from the start trans msg
+            msglib::StartTransMessage incoming_msg;
+            incoming_msg.Unpack((unsigned char*)buffer);
+
+            cout << "Name: " << incoming_msg.name << endl;
+
+            // Need to send back the public key
+            msglib::ResponseMessage response("StartTrans", public_key);
+            response.Pack((unsigned char*)buffer);
+
+            
+            }
+            break;
+        case 2: // Request
+            break;
+        default:
+            break;
+    }
 }
