@@ -49,6 +49,12 @@ int main()
 
     std::cout << "Asked for: " << rx.requestSent << std::endl;
     std::cout << "Got back: " << rx.response << std::endl;
+
+    while (true) {
+        
+    }
+
+    close(CreateSocket);
  
     return 0;
 }

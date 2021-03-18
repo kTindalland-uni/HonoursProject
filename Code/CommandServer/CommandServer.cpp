@@ -6,6 +6,9 @@
 #include <memory>
 #include <string>
 #include <unistd.h>
+#include <CommandServer/ClientInfo.hpp>
+#include <mutex>
+#include <shared_mutex>
 
 // Message lib
 #include <MessageLib/IMessage.hpp>
@@ -76,12 +79,19 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             msglib::StartTransMessage incoming_msg;
             incoming_msg.Unpack((unsigned char*)buffer);
 
-            cout << "Name: " << incoming_msg.name << endl;
+            ClientInfo ci;
+            ci.DH_Serv_PrivKey = "";
+            ci.DH_Serv_PubKey = "";
+
+            {
+                std::unique_lock lock(client_info_mutex);
+                client_info[incoming_msg.name] = ci;
+            }
+            
 
             // Need to send back the public key
             msglib::ResponseMessage response("StartTrans", public_key);
             response.Pack((unsigned char*)buffer);
-
             
             }
             break;
