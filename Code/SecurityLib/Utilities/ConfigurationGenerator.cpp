@@ -5,12 +5,18 @@
 #include <SecurityLib/Implementation/XMLFileIO.hpp>
 
 namespace securitylib {
+	ConfigurationGenerator::ConfigurationGenerator() {
+		fileio = NULL;
+	}
+
 	ConfigurationGenerator::ConfigurationGenerator(IFileIO* fileio_method) {
 		fileio = fileio_method;
 	}
 
 	ConfigurationGenerator::~ConfigurationGenerator() {
-		delete fileio;
+		if (fileio != NULL) {
+			delete fileio;
+		}
 	}
 
 	SecurityConfiguration ConfigurationGenerator::GenerateConfigFromFile(std::string filepath) {

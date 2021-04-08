@@ -5,7 +5,8 @@ set(Sources
 	StartTransMessage.cpp
 	RequestMessage.cpp
 	ResponseMessage.cpp
+	EncryptedMessage.cpp
 )
 
 include_directories(../Include)
-add_library(messages ${Sources})
+add_library(messages ${Sources}) 

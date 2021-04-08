@@ -4,8 +4,7 @@
 #include <string>
 
 struct ClientInfo {
-    std::string DH_Serv_PubKey;
-    std::string DH_Serv_PrivKey;
+    std::string KE_key;
 };
 
 #endif

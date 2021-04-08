@@ -14,10 +14,15 @@
 #include <MessageLib/IMessage.hpp>
 #include <MessageLib/ResponseMessage.hpp>
 #include <MessageLib/StartTransMessage.hpp>
+#include <MessageLib/RequestMessage.hpp>
+#include <MessageLib/EncryptedMessage.hpp>
 
 // Sec lib
 #include <SecurityLib/SecurityService.hpp>
 #include <SecurityLib/Structures/SecurityConfiguration.hpp>
+#include <SecurityLib/ConfigurationGenerator.hpp>
+
+#include <iostream>
 
 using namespace std;
 
@@ -25,16 +30,13 @@ CommandServer::CommandServer() {
     // Default constructor
     // Create the security service.
     // Make default config
-    securitylib::SecurityConfiguration config;
-    config.EncryptionMethod = "AES";
-    config.HashingMethod = "SHA3";
-    config.KeyExchangeMethod = "Diffie-Helman";
-    config.SignatureMethod = "Default";
-    config.SymmetricKeyGenerationMethod = "Eliptic-Curve";
+    securitylib::ConfigurationGenerator config_generator;
+    securitylib::SecurityConfiguration config = config_generator.GenerateDefaultConfiguration();
 
     sec_service = make_shared<securitylib::SecurityService>(config);
 
     sec_service->symmetricKeyGenerationService->GenerateKeys(private_key, public_key);
+    sec_service->keyExchangeService->GenerateIntermediateKeys(KE_private_key, KE_public_key);
 }
 
 void CommandServer::HandleClientConnection(int socket) {
@@ -80,8 +82,7 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             incoming_msg.Unpack((unsigned char*)buffer);
 
             ClientInfo ci;
-            ci.DH_Serv_PrivKey = "";
-            ci.DH_Serv_PubKey = "";
+            ci.KE_key = "";
 
             {
                 std::unique_lock lock(client_info_mutex);
@@ -95,8 +96,59 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             
             }
             break;
-        case 2: // Request
+
+        case 2: {// Request
+            msglib::RequestMessage incoming_msg;
+            incoming_msg.Unpack((unsigned char*)buffer);
+
+            std::string request = incoming_msg.request.substr(0, 10);
+            if (request == "TradeKeys ") {
+                // Get the key out of it
+                std::string client_public_key = incoming_msg.request.substr(10);
+                // Perform the key exchange
+
+                std::cout << "Server key set: " << client_public_key << "\n\n" << KE_private_key << std::endl;
+
+                std::string key = sec_service->keyExchangeService->GenerateFinalKey(KE_private_key, client_public_key);
+
+                // Store the key
+                {
+                    std::unique_lock lock(client_info_mutex);
+                    client_info[incoming_msg.name].KE_key = key;
+                }
+
+                // Craft and Send the response.
+                msglib::ResponseMessage response(incoming_msg.request, KE_public_key);
+
+                response.Pack((unsigned char*)buffer);
+            }
+
+            }
             break;
+
+        case 3: { // Encrypted Message
+            msglib::EncryptedMessage incoming_msg;
+            incoming_msg.Unpack((unsigned char*)buffer);
+
+            // Get the key from the store
+            std::string key;
+            {
+                std::unique_lock lock(client_info_mutex);
+                key = client_info[incoming_msg.name].KE_key;
+            }
+
+            std::string decrypted_message = sec_service->encryptionService->DecryptData(key, incoming_msg.name, incoming_msg.message);
+
+            // Encrypt and send back
+
+            std::string encrypted_message = sec_service->encryptionService->EncryptData(key, incoming_msg.name, decrypted_message);
+            msglib::EncryptedMessage response(encrypted_message, "Server");
+
+            response.Pack((unsigned char*)buffer);
+
+            }
+            break;
+
         default:
             break;
     }

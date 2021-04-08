@@ -1,17 +1,17 @@
-#ifndef __RQSTMSG
-#define __RQSTMSG
+#ifndef __ENCMSG
+#define __ENCMSG
 
 #include <MessageLib/IMessage.hpp>
 #include <string>
 
 namespace msglib {
-    class RequestMessage: public IMessage {
+    class EncryptedMessage: public IMessage {
         public:
-            std::string request;
+            std::string message;
             std::string name;
 
-            RequestMessage();
-            RequestMessage(std::string requestString, std::string clientName);
+            EncryptedMessage();
+            EncryptedMessage(std::string message, std::string name);
 
             void Pack(unsigned char* buffer);
             void Unpack(unsigned char* buffer);

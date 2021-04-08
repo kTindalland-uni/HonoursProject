@@ -6,22 +6,25 @@ namespace msglib {
         request = "UNDEFINED";
     }
 
-    RequestMessage::RequestMessage(std::string requestString) {
+    RequestMessage::RequestMessage(std::string requestString, std::string clientName) {
         messageId = 2;
         request = requestString;
+        name = clientName;
     }
 
     void RequestMessage::Pack(unsigned char* buffer) {
         int bufferPos = 0;
         
         bufferPos = IMessage::InsertInt(messageId, buffer, bufferPos);
-        IMessage::InsertString(request, buffer, bufferPos);
+        bufferPos = IMessage::InsertString(request, buffer, bufferPos);
+        IMessage::InsertString(name, buffer, bufferPos);
     }
 
     void RequestMessage::Unpack(unsigned char* buffer) {
         int bufferPos = 0;
 
         bufferPos = IMessage::RetrieveInt(&messageId, buffer, bufferPos);
-        IMessage::RetrieveString(&request, buffer, bufferPos);
+        bufferPos = IMessage::RetrieveString(&request, buffer, bufferPos);
+        IMessage::RetrieveString(&name, buffer, bufferPos);
     }
 }

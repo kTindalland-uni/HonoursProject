@@ -16,6 +16,9 @@ class CommandServer {
         std::string public_key;
         std::string private_key;
 
+        std::string KE_public_key;
+        std::string KE_private_key;
+
         std::shared_mutex client_info_mutex;
         std::map<std::string, ClientInfo> client_info;
 
