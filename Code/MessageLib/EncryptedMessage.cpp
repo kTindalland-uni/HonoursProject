@@ -7,7 +7,7 @@ namespace msglib {
     }
 
     EncryptedMessage::EncryptedMessage(std::string requestString, std::string messageName) {
-        messageId = 2;
+        messageId = 3;
         message = requestString;
         name = messageName;
     }

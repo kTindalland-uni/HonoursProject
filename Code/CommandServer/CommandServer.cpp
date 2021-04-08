@@ -107,8 +107,6 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
                 std::string client_public_key = incoming_msg.request.substr(10);
                 // Perform the key exchange
 
-                std::cout << "Server key set: " << client_public_key << "\n\n" << KE_private_key << std::endl;
-
                 std::string key = sec_service->keyExchangeService->GenerateFinalKey(KE_private_key, client_public_key);
 
                 // Store the key

@@ -93,7 +93,7 @@ int main()
     enc_msg.Unpack(buffer); // Got message back.
     std::string decrypted_message = service.encryptionService->DecryptData(key, name, enc_msg.message);
 
-    std::cout << decrypted_message << std::endl;
+    std::cout << "Decrypted Message: " << decrypted_message << std::endl;
 
     close(CreateSocket);
  
