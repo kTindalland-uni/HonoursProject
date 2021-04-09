@@ -32,3 +32,17 @@ int main()
  
     return 0;
 }
+
+void SendStatusUpdate() {
+
+    // Send 10 status updates
+    for(int i = 0; i < 10; i++) {
+
+        // Create and pack a message.
+        
+
+        // Wait for 3 seconds
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    }
+
+}
