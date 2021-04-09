@@ -10,6 +10,11 @@
 namespace securitylib {
 
 	std::string AESEncryptionService::EncryptData(std::string key, std::string iv, std::string data) {
+        // Check the length of the key
+        if (key.length() > CryptoPP::AES::DEFAULT_KEYLENGTH) {
+            key.resize(CryptoPP::AES::DEFAULT_KEYLENGTH);
+        }
+
 		// Turn the key into a secure byte block
 		CryptoPP::SecByteBlock key_block(reinterpret_cast<const CryptoPP::byte*>(&key[0]), key.size());
 		
@@ -32,6 +37,11 @@ namespace securitylib {
 	}
 
 	std::string AESEncryptionService::DecryptData(std::string key, std::string iv, std::string data) {
+        // Check the length of the key
+        if (key.length() > CryptoPP::AES::DEFAULT_KEYLENGTH) {
+            key.resize(CryptoPP::AES::DEFAULT_KEYLENGTH);
+        }
+        
 		// Turn the key into a secure byte block
 		CryptoPP::SecByteBlock key_block(reinterpret_cast<const CryptoPP::byte*>(&key[0]), key.size());
 

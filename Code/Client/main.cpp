@@ -10,10 +10,19 @@
 #include <arpa/inet.h>
 
 #include <MessageLib/StartTransMessage.hpp>
+#include <MessageLib/ResponseMessage.hpp>
+#include <MessageLib/RequestMessage.hpp>
+#include <MessageLib/EncryptedMessage.hpp>
+
+#include <SecurityLib/ConfigurationGenerator.hpp>
+#include <SecurityLib/SecurityService.hpp>
+#include <SecurityLib/Structures/SecurityConfiguration.hpp>
 #include <iostream>
+#include <string>
  
 int main()
 {
+    std::string name = "Client1";
     int CreateSocket = 0,n = 0;
     unsigned char buffer[4096];
     struct sockaddr_in ipOfServer;
@@ -36,17 +45,57 @@ int main()
         return 1;
     }
  
-    msglib::StartTransMessage tx("Hello world");
+    msglib::StartTransMessage tx(name);
     tx.Pack(buffer);
 
     send(CreateSocket, buffer, 4096, 0);
 
     recv(CreateSocket, buffer, 4096, 0);
 
-    msglib::StartTransMessage rx;
+    msglib::ResponseMessage rx;
     rx.Unpack(buffer);
 
-    std::cout << "MSG: " << rx.name << std::endl;
+    std::cout << "Asked for: " << rx.requestSent << std::endl;
+    std::cout << "Got back: " << rx.response << std::endl;
+
+    // Get a security service with a default config.
+    securitylib::ConfigurationGenerator configGenerator;
+    securitylib::SecurityConfiguration config = configGenerator.GenerateDefaultConfiguration();
+
+    securitylib::SecurityService service(config);
+
+    // Generate the intermediate keys.
+    std::string private_key, public_key;
+    service.keyExchangeService->GenerateIntermediateKeys(private_key, public_key);
+
+    // Trade keys.
+    // Create the request
+    msglib::RequestMessage request_keys("TradeKeys " + public_key, name);
+
+    request_keys.Pack(buffer);
+
+    send(CreateSocket, buffer, 4096, 0);
+
+    recv(CreateSocket, buffer, 4096, 0);
+
+    rx.Unpack(buffer); // Got keys back.
+
+    std::string key = service.keyExchangeService->GenerateFinalKey(private_key, rx.response); // Get the exchanged key
+
+    std::string encrypted_message = service.encryptionService->EncryptData(key, name, "Hello");
+    msglib::EncryptedMessage enc_msg(encrypted_message, name);
+    enc_msg.Pack(buffer);
+
+    send(CreateSocket, buffer, 4096, 0);
+
+    recv(CreateSocket, buffer, 4096, 0);
+
+    enc_msg.Unpack(buffer); // Got message back.
+    std::string decrypted_message = service.encryptionService->DecryptData(key, name, enc_msg.message);
+
+    std::cout << "Decrypted Message: " << decrypted_message << std::endl;
+
+    close(CreateSocket);
  
     return 0;
 }

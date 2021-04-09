@@ -1,3 +1,6 @@
+#ifndef __IMSG
+#define __IMSG
+
 #include <cstring>
 #include <string>
 
@@ -41,3 +44,5 @@ namespace msglib {
             }
     };
 }
+
+#endif

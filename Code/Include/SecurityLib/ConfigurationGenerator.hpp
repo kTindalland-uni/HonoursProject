@@ -6,6 +6,7 @@ namespace securitylib {
 	class ConfigurationGenerator {
 		public:
 			ConfigurationGenerator(IFileIO* fileio_method);
+			ConfigurationGenerator();
 			~ConfigurationGenerator();
 			SecurityConfiguration GenerateConfigFromFile(std::string filepath);
 			SecurityConfiguration GenerateDefaultConfiguration();
