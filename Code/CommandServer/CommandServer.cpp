@@ -132,7 +132,7 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             std::string key;
             {
                 std::unique_lock lock(client_info_mutex);
-                key = client_info[incoming_msg.name].KE_key;
+                key.assign(client_info[incoming_msg.name].KE_key);
             }
 
             std::string decrypted_message = sec_service->encryptionService->DecryptData(key, incoming_msg.name, incoming_msg.message);

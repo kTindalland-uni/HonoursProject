@@ -16,13 +16,15 @@ namespace msglib {
         int bufferPos = 0;
         
         bufferPos = IMessage::InsertInt(messageId, buffer, bufferPos);
-        IMessage::InsertString(message, buffer, bufferPos);
+        bufferPos = IMessage::InsertString(message, buffer, bufferPos);
+        IMessage::InsertString(name, buffer, bufferPos);
     }
 
     void EncryptedMessage::Unpack(unsigned char* buffer) {
         int bufferPos = 0;
 
         bufferPos = IMessage::RetrieveInt(&messageId, buffer, bufferPos);
-        IMessage::RetrieveString(&message, buffer, bufferPos);
+        bufferPos = IMessage::RetrieveString(&message, buffer, bufferPos);
+        IMessage::RetrieveString(&name, buffer, bufferPos);
     }
 }
