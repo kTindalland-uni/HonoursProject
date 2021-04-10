@@ -34,7 +34,7 @@ int main()
     std::queue<msglib::EncryptedMessage> messageQueue;
     std::mutex messageQueueLock;
 
-    int CreateSocket = 0,n = 0;
+    int CreateSocket = 0;
     unsigned char buffer[4096];
     struct sockaddr_in ipOfServer;
  
