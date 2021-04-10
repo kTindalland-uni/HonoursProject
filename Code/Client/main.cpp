@@ -13,16 +13,27 @@
 #include <MessageLib/ResponseMessage.hpp>
 #include <MessageLib/RequestMessage.hpp>
 #include <MessageLib/EncryptedMessage.hpp>
+#include <MessageLib/IMessage.hpp>
 
 #include <SecurityLib/ConfigurationGenerator.hpp>
 #include <SecurityLib/SecurityService.hpp>
 #include <SecurityLib/Structures/SecurityConfiguration.hpp>
+
 #include <iostream>
 #include <string>
+#include <queue>
+#include <mutex>
+#include <thread>
+#include <chrono>
+
+std::string key;
  
 int main()
 {
     std::string name = "Client1";
+    std::queue<msglib::EncryptedMessage> messageQueue;
+    std::mutex messageQueueLock;
+
     int CreateSocket = 0,n = 0;
     unsigned char buffer[4096];
     struct sockaddr_in ipOfServer;
@@ -80,7 +91,7 @@ int main()
 
     rx.Unpack(buffer); // Got keys back.
 
-    std::string key = service.keyExchangeService->GenerateFinalKey(private_key, rx.response); // Get the exchanged key
+    key = service.keyExchangeService->GenerateFinalKey(private_key, rx.response); // Get the exchanged key
 
     std::string encrypted_message = service.encryptionService->EncryptData(key, name, "Hello");
     msglib::EncryptedMessage enc_msg(encrypted_message, name);
@@ -95,7 +106,74 @@ int main()
 
     std::cout << "Decrypted Message: " << decrypted_message << std::endl;
 
+    // Start using the queue for messages.
+    
+
     close(CreateSocket);
  
     return 0;
+}
+
+void SendQueue(std::mutex& messageQueueLock, std::queue<msglib::EncryptedMessage>& messageQueue, int fd) {
+    unsigned char buffer[4096];
+    memset(buffer, '0' ,sizeof(buffer));
+
+
+    while(true) {
+        // Wait a second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // Make base message
+        msglib::EncryptedMessage msg;
+
+        // Check if there's something in the queue.
+        {
+            std::unique_lock lock(messageQueueLock);
+            if (messageQueue.size() < 1) {
+                continue;
+            }
+
+            msg = messageQueue.front();
+            messageQueue.pop();
+        }
+
+        // Pack and send the message.
+        msg.Pack(buffer);
+
+        send(fd, buffer, 4096, 0);
+
+    }
+}
+
+void Listen(std::mutex& messageQueueLock, std::queue<msglib::EncryptedMessage>& messageQueue, int fd) {
+    unsigned char buffer[4096];
+    memset(buffer, '0', sizeof(buffer));
+
+    while(true) {
+        // Wait a second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // Wait for recv.
+        recv(fd, buffer, 4096, 0);
+
+        // Call the handle function.
+        HandleIncoming(messageQueueLock, messageQueue, buffer);
+    }
+}
+
+void HandleIncoming(std::mutex& messageQueueLock, std::queue<msglib::EncryptedMessage>& messageQueue, unsigned char* buffer) {
+    // Get the id from the buffer.
+    int messageId;
+    msglib::IMessage::RetrieveInt(&messageId, buffer, 0);
+
+    switch (messageId) {
+        case 3: 
+            std::cout << "Got an encrypted message!" << std::endl;
+
+            // Decrypt and print out the message.
+
+
+        default:
+            break;
+    }
 }
