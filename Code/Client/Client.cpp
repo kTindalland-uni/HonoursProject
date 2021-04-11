@@ -25,13 +25,24 @@
 #include <mutex>
 #include <thread>
 #include <chrono>
+#include <memory>
 
 #include <Client/Client.hpp>
 
  Client::Client() {
     _name = "Client1";
+    _key = "";
+    _server_sign_key = "";
+    _server_pub_key = "";
+
     _socket_fd = 0;
     _is_running.fetch_add(1, std::memory_order_seq_cst); // Show as running.
+
+    // Spin up a security service.
+    securitylib::ConfigurationGenerator config_generator;
+    securitylib::SecurityConfiguration config = config_generator.GenerateDefaultConfiguration();
+
+    _sec_service = std::make_shared<securitylib::SecurityService>(config);
  }
 
 // Establish a connection to the server.
@@ -55,81 +66,74 @@
     }
  }
 
+
 void Client::GetEncryptionKeys() {
+    _threads.push_back(std::thread(&Client::GetEncryptionKeysWithQueue, this));
+}
+
+
+void Client::GetEncryptionKeysWithQueue() {
+    // Lock mutex for the condvar...
+    std::unique_lock lock(_get_keys_mutex);
+
+    // Create a buffer
     unsigned char buffer[4096];
     memset(buffer, '0' ,sizeof(buffer));
 
+    // Create the StartTrans message to ask for public signing key
     msglib::StartTransMessage tx(_name);
     tx.Pack(buffer);
 
-    send(_socket_fd, buffer, 4096, 0);
+    // Add message to the queue
+    AddBufferToQueue(buffer, 4096);
 
-    recv(_socket_fd, buffer, 4096, 0);
+    // Wait for the response...    
+    _get_keys_cv.wait(lock, [this] {return (_server_sign_key != "" || _kill_threads.load() != 0) ? true : false; });
+    if (_kill_threads.load() != 0) {
+        return;
+    }
 
-    msglib::ResponseMessage rx;
-    rx.Unpack(buffer);
-
-    std::cout << "Asked for: " << rx.requestSent << std::endl;
-    std::cout << "Got back: " << rx.response << std::endl;
-
-    // Get a security service with a default config.
-    securitylib::ConfigurationGenerator configGenerator;
-    securitylib::SecurityConfiguration config = configGenerator.GenerateDefaultConfiguration();
-
-    securitylib::SecurityService service(config);
-
-    // Generate the intermediate keys.
+    // Generate the encryption intermediate keys
     std::string private_key, public_key;
-    service.keyExchangeService->GenerateIntermediateKeys(private_key, public_key);
+    _sec_service->keyExchangeService->GenerateIntermediateKeys(private_key, public_key);
 
-    // Trade keys.
-    // Create the request
+    // Trade the keys.
+    // Create the request.
     msglib::RequestMessage request_keys("TradeKeys " + public_key, _name);
-
     request_keys.Pack(buffer);
 
-    send(_socket_fd, buffer, 4096, 0);
+    // Add the request to the queue.
+    AddBufferToQueue(buffer, 4096);
 
-    recv(_socket_fd, buffer, 4096, 0);
+    // Wait for the response...
+    _get_keys_cv.wait(lock, [this] {return (_server_pub_key != "" || _kill_threads.load() != 0) ? true : false; });
+    if (_kill_threads.load() != 0) {
+        return;
+    }
 
-    rx.Unpack(buffer); // Got keys back.
+    // Generate the final key. _key in the function argument is the server's public key
+    // _key after it has been assigned is the full encryption key 
+    _key = _sec_service->keyExchangeService->GenerateFinalKey(private_key, _server_pub_key);
 
-    _key = service.keyExchangeService->GenerateFinalKey(private_key, rx.response); // Get the exchanged key
-
-    std::string encrypted_message = service.encryptionService->EncryptData(_key, _name, "Hello");
+    // Send a test message.
+    std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Hello");
     msglib::EncryptedMessage enc_msg(encrypted_message, _name);
     enc_msg.Pack(buffer);
+    AddBufferToQueue(buffer, 4096);
 
-    send(_socket_fd, buffer, 4096, 0);
-
-    recv(_socket_fd, buffer, 4096, 0);
-
-    enc_msg.Unpack(buffer); // Got message back.
-    std::string decrypted_message = service.encryptionService->DecryptData(_key, _name, enc_msg.message);
-
-    std::cout << "Decrypted Message: " << decrypted_message << std::endl;
-
-    // DEBUG: EVERYTHING UNDERNEATH
-    // Add some stuff to the queue.
-
-    
+    // DEBUG: SEND 10 MESSAGES
     for (int i = 0; i < 10; i++) {
-        std::string encryptedMessage = service.encryptionService->EncryptData(_key, _name, "Encrypted message #" + std::to_string(i));
-        msglib::EncryptedMessage msg(encrypted_message, _name);
-        msg.Pack(buffer);
-        std::string packed_data((char*)buffer, 4096);
-
-        {
-            std::unique_lock lock(_messageQueueLock);
-            _messageQueue.push(packed_data);
-        }
+        std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Test Message #" + std::to_string(i));
+        msglib::EncryptedMessage enc_msg(encrypted_message, _name);
+        enc_msg.Pack(buffer);
+        AddBufferToQueue(buffer, 4096);
     }
 }
 
- void Client::SendQueue() {
+void Client::SendQueue() {
     while(_kill_threads.load() != 1) {
         // Wait a second
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
         // Make storage container.
         std::string msg;
@@ -149,24 +153,88 @@ void Client::GetEncryptionKeys() {
     }
  }
 
+ void Client::AddBufferToQueue(unsigned char* buffer, int length) {
+    std::string packed_data((char*)buffer, length);
+    {
+        std::unique_lock lock(_messageQueueLock);
+        _messageQueue.push(packed_data);
+    }
+ }
+
  void Client::Listen() {
     unsigned char buffer[4096];
     memset(buffer, '0', sizeof(buffer));
 
     while(_kill_threads.load() != 1) {
         // Wait a second
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
 
         // Wait for recv
-        recv(_socket_fd, buffer, 4096, 0);
+        recv(_socket_fd, buffer, 4096, MSG_DONTWAIT);
 
         // Call the handle function.
-        HandleIncoming(buffer) ;
+        HandleIncoming(buffer);
+
+        // Flush Buffer
+        memset(buffer, '0', sizeof(buffer));
     }
  }
 
  void Client::HandleIncoming(unsigned char* buffer) {
+    // Get the message ID from the buffer.
+    int messageId;
+    msglib::IMessage::RetrieveInt(&messageId, buffer, 0);
 
+    switch (messageId) {
+        case 3: // Response message
+            {
+                msglib::ResponseMessage responseMessage;
+                responseMessage.Unpack(buffer);
+
+                // See what has been requested...
+                if (responseMessage.requestSent == "StartTrans") {
+                    // If start trans..
+
+                    // Store key and notify thread
+                    {
+                        std::unique_lock lock(_get_keys_mutex);
+                        _server_sign_key = responseMessage.response;
+
+                        _get_keys_cv.notify_one();
+                    }
+                }
+                else if (responseMessage.requestSent == "TradeKeys") {
+                    // If trade keys...
+
+                    // Store servers public key and notify thread
+                    {
+                        std::unique_lock lock(_get_keys_mutex);
+                        _server_pub_key = responseMessage.response;
+
+                        _get_keys_cv.notify_one();
+                    }
+                }
+            }
+            
+            break;
+
+        case 4: // Encrypted message
+            {
+                // Unpack buffer into a message
+                msglib::EncryptedMessage enc_msg;
+                enc_msg.Unpack(buffer);
+
+                // Decrypt the message.
+                std::string decrypted_message = _sec_service->encryptionService->DecryptData(_key, _name, enc_msg.message);
+
+                // DEBUG, print out message.
+                std::cout << "Message Decrypted: " << decrypted_message << std::endl;
+            }
+            break;
+
+        default:
+            break;
+    }
  }
 
  void Client::StartCommunicationThreads() {
@@ -192,6 +260,12 @@ void Client::GetEncryptionKeys() {
 
     // Set the flag to let the threads finish.
     _kill_threads.fetch_add(1, std::memory_order_seq_cst);
+
+    // If there's a get keys thread going, notify it...
+    {
+        std::unique_lock lock(_get_keys_mutex);
+        _get_keys_cv.notify_all();
+    }
 
     // Join the threads and remove them from the vector.
     int size = _threads.size();

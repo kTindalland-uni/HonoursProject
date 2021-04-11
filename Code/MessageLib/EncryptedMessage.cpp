@@ -2,12 +2,12 @@
 
 namespace msglib {
     EncryptedMessage::EncryptedMessage() {
-        messageId = 3;
+        messageId = 4;
         message = "UNDEFINED";
     }
 
     EncryptedMessage::EncryptedMessage(std::string requestString, std::string messageName) {
-        messageId = 3;
+        messageId = 4;
         message = requestString;
         name = messageName;
     }

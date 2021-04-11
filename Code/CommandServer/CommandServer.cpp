@@ -116,7 +116,7 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
                 }
 
                 // Craft and Send the response.
-                msglib::ResponseMessage response(incoming_msg.request, KE_public_key);
+                msglib::ResponseMessage response("TradeKeys", KE_public_key);
 
                 response.Pack((unsigned char*)buffer);
             }
@@ -124,7 +124,7 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             }
             break;
 
-        case 3: { // Encrypted Message
+        case 4: { // Encrypted Message
             msglib::EncryptedMessage incoming_msg;
             incoming_msg.Unpack((unsigned char*)buffer);
 

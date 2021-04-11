@@ -22,8 +22,8 @@ int main()
 
     // Spin up the client    
     client.StartClient();
-    client.GetEncryptionKeys();
     client.StartCommunicationThreads();
+    client.GetEncryptionKeys();
 
     while(client.IsRunning()) {
         // Wait to not max out CPU
