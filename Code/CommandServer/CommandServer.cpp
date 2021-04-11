@@ -131,7 +131,7 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
             // Get the key from the store
             std::string key;
             {
-                std::unique_lock lock(client_info_mutex);
+                std::shared_lock lock_shared(client_info_mutex); // Lock for read-only
                 key.assign(client_info[incoming_msg.name].KE_key);
             }
 
