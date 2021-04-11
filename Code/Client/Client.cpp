@@ -31,6 +31,7 @@
  Client::Client() {
     _name = "Client1";
     _socket_fd = 0;
+    _is_running.fetch_add(1, std::memory_order_seq_cst); // Show as running.
  }
 
 // Establish a connection to the server.
@@ -108,7 +109,21 @@ void Client::GetEncryptionKeys() {
 
     std::cout << "Decrypted Message: " << decrypted_message << std::endl;
 
-    close(_socket_fd);
+    // DEBUG: EVERYTHING UNDERNEATH
+    // Add some stuff to the queue.
+
+    
+    for (int i = 0; i < 10; i++) {
+        std::string encryptedMessage = service.encryptionService->EncryptData(_key, _name, "Encrypted message #" + std::to_string(i));
+        msglib::EncryptedMessage msg(encrypted_message, _name);
+        msg.Pack(buffer);
+        std::string packed_data((char*)buffer, 4096);
+
+        {
+            std::unique_lock lock(_messageQueueLock);
+            _messageQueue.push(packed_data);
+        }
+    }
 }
 
  void Client::SendQueue() {
@@ -135,7 +150,67 @@ void Client::GetEncryptionKeys() {
  }
 
  void Client::Listen() {
+    unsigned char buffer[4096];
+    memset(buffer, '0', sizeof(buffer));
+
     while(_kill_threads.load() != 1) {
-         
+        // Wait a second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // Wait for recv
+        recv(_socket_fd, buffer, 4096, 0);
+
+        // Call the handle function.
+        HandleIncoming(buffer) ;
     }
  }
+
+ void Client::HandleIncoming(unsigned char* buffer) {
+
+ }
+
+ void Client::StartCommunicationThreads() {
+    // Check for threads in _threads
+    if (_threads.size() != 0) {
+        return;
+    }
+
+    // Set up the atomic flag to be 0.
+    unsigned char atomic_current = _kill_threads.load();
+    _kill_threads.fetch_sub(atomic_current, std::memory_order_seq_cst);
+
+    // Create the threads.
+    _threads.push_back(std::thread(&Client::SendQueue, this));
+    _threads.push_back(std::thread(&Client::Listen, this));
+ }
+
+ void Client::KillCommunicationThreads() {
+    // Check for threads in _threads.
+    if (_threads.size() == 0) {
+        return;
+    }
+
+    // Set the flag to let the threads finish.
+    _kill_threads.fetch_add(1, std::memory_order_seq_cst);
+
+    // Join the threads and remove them from the vector.
+    int size = _threads.size();
+    for(int i = 0; i < size; i++) {
+        _threads.back().join();
+        _threads.pop_back();
+    }    
+ }
+
+void Client::StopAll() {
+    KillCommunicationThreads();
+
+    // Set up the atomic flag to be 0.
+    unsigned char atomic_current = _is_running.load();
+    _is_running.fetch_sub(atomic_current, std::memory_order_seq_cst);
+
+    close(_socket_fd);
+}
+
+bool Client::IsRunning() {
+    return _is_running.load() != 0;
+}

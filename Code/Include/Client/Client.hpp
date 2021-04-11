@@ -5,6 +5,8 @@
 #include <queue>
 #include <mutex>
 #include <atomic>
+#include <vector>
+#include <thread>
 
 #include <MessageLib/EncryptedMessage.hpp>
 
@@ -17,10 +19,13 @@ class Client {
         std::mutex _messageQueueLock; // Used to lock the message queue. To be able to use the queue on multiple threads.
         
         std::atomic<unsigned char> _kill_threads; // Make 1 when you want to stop the threads from executing.
+        std::atomic<unsigned char> _is_running;
+
+        std::vector<std::thread> _threads;
 
         int _socket_fd; // The file descriptor of the socket used to communicate with the server.
 
-        void HandleIncoming(); // Handles incoming messages from the server.
+        void HandleIncoming(unsigned char* buffer); // Handles incoming messages from the server.
         void SendQueue();
         void Listen();
     public:
@@ -29,8 +34,9 @@ class Client {
         void GetEncryptionKeys();
         void StartCommunicationThreads();
         void KillCommunicationThreads();
+        bool IsRunning();
+        void StopAll();
         
-
 };
 
 
