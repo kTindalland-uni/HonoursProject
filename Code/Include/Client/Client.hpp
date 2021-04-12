@@ -29,6 +29,7 @@ class Client {
 
         std::atomic<unsigned char> _kill_threads; // Make 1 when you want to stop the threads from executing.
         std::atomic<unsigned char> _is_running;
+        std::atomic<unsigned char> _can_encrypt;
 
         std::vector<std::thread> _threads;
 
@@ -41,6 +42,7 @@ class Client {
         void Listen();
         void AddBufferToQueue(unsigned char* buffer, int length);
         void GetEncryptionKeysWithQueue();
+        void SendStatusUpdatesThreadFunction();
     public:
         Client();
         void StartClient();
@@ -49,6 +51,7 @@ class Client {
         void KillCommunicationThreads();
         bool IsRunning();
         void StopAll();
+        void SendStatusUpdates();
         
 };
 
