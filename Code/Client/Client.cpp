@@ -116,20 +116,6 @@ void Client::GetEncryptionKeysWithQueue() {
     _key = _sec_service->keyExchangeService->GenerateFinalKey(private_key, _server_pub_key);
 
     _can_encrypt.fetch_add(1, std::memory_order_seq_cst);
-
-    // Send a test message.
-    std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Hello");
-    msglib::EncryptedMessage enc_msg(encrypted_message, _name);
-    enc_msg.Pack(buffer);
-    AddBufferToQueue(buffer, 4096);
-
-    // DEBUG: SEND 10 MESSAGES
-    for (int i = 0; i < 10; i++) {
-        std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Test Message #" + std::to_string(i));
-        msglib::EncryptedMessage enc_msg(encrypted_message, _name);
-        enc_msg.Pack(buffer);
-        AddBufferToQueue(buffer, 4096);
-    }
 }
 
 void Client::SendQueue() {

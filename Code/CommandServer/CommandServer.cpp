@@ -9,6 +9,7 @@
 #include <CommandServer/ClientInfo.hpp>
 #include <mutex>
 #include <shared_mutex>
+#include <vector>
 
 // Message lib
 #include <MessageLib/IMessage.hpp>
@@ -137,6 +138,47 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
 
             std::string decrypted_message = sec_service->encryptionService->DecryptData(key, incoming_msg.name, incoming_msg.message);
 
+            // Get the message type
+            std::string message_request = decrypted_message.substr(0, 10);
+
+            // Switch on the message_request
+            if (message_request == "StatusUpd ") {
+                // Params in one string
+                std::string params = decrypted_message.substr(10);
+                
+                // Extract the params
+                vector<string> params_vec;
+                SplitString(params, ',', params_vec);
+
+                // Map the params
+                {
+                    unique_lock lock(_client_statuses_mutex);
+                    vector<string> single_param;
+                    for (int i = 0; i < params_vec.size(); i++) {
+                        SplitString(params_vec[i], '=', single_param);
+                        _client_statuses[incoming_msg.name][single_param[0]] = single_param[1];
+
+                    }
+                }
+                
+
+            }
+
+
+            // Iterate over map and print
+            map<string, string> client_status;
+            {
+                unique_lock lock(_client_statuses_mutex);
+
+                client_status = _client_statuses[incoming_msg.name];
+            }
+            map<string, string>::iterator iter = client_status.begin();
+
+            for(pair<string, string> element : client_status) {
+                cout << element.first << ": " << element.second << endl;
+            }
+
+
             // Encrypt and send back
 
             std::string encrypted_message = sec_service->encryptionService->EncryptData(key, incoming_msg.name, decrypted_message);
@@ -149,5 +191,20 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
 
         default:
             break;
+    }
+}
+
+// Split string method from https://www.oreilly.com/library/view/c-cookbook/0596007612/ch04s07.html
+void CommandServer::SplitString(const string& s, char c, vector<string>& v) {
+    string::size_type i = 0;
+    string::size_type j = s.find(c);
+
+    while (j != string::npos) {
+        v.push_back(s.substr(i, j-i));
+        i = ++j;
+        j = s.find(c, j);
+
+        if (j == string::npos)
+            v.push_back(s.substr(i, s.length()));
     }
 }
