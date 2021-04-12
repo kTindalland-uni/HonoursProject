@@ -115,6 +115,8 @@ void Client::GetEncryptionKeysWithQueue() {
     // _key after it has been assigned is the full encryption key 
     _key = _sec_service->keyExchangeService->GenerateFinalKey(private_key, _server_pub_key);
 
+    _can_encrypt.fetch_add(1, std::memory_order_seq_cst);
+
     // Send a test message.
     std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Hello");
     msglib::EncryptedMessage enc_msg(encrypted_message, _name);
@@ -287,4 +289,43 @@ void Client::StopAll() {
 
 bool Client::IsRunning() {
     return _is_running.load() != 0;
+}
+
+void Client::SendStatusUpdatesThreadFunction() {
+    unsigned char buffer[4096];
+
+    // Check if we can encrypt.
+    while (_can_encrypt.load() == 0) {
+        if (_kill_threads.load() != 0) { // If it needs to be killed early.
+            return;
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+
+    int i = 0;
+    // Send status updates
+    while(_kill_threads.load() != 1) {
+
+        // Create and pack a message.
+        std::string message = "StatusUpd ";
+        message = message.append("test=" + std::to_string(i));
+        message = message.append(",param2=hello");
+        std::string encrpted_string = _sec_service->encryptionService->EncryptData(_key, _name, message);
+
+        msglib::EncryptedMessage enc_msg(encrpted_string, _name);
+        enc_msg.Pack(buffer);
+
+        AddBufferToQueue(buffer, 4096);
+
+        i++;
+
+        // Wait for 3 seconds
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+    }
+
+}
+
+void Client::SendStatusUpdates() {
+    _threads.push_back(std::thread(&Client::SendStatusUpdatesThreadFunction, this));
 }
