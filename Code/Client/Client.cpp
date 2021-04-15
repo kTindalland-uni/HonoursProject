@@ -115,21 +115,15 @@ void Client::GetEncryptionKeysWithQueue() {
     // _key after it has been assigned is the full encryption key 
     _key = _sec_service->keyExchangeService->GenerateFinalKey(private_key, _server_pub_key);
 
-    _can_encrypt.fetch_add(1, std::memory_order_seq_cst);
+    // Test message
+    std::string plain_text = "Encryption Test.";
+    std::string cipher_text = _sec_service->encryptionService->EncryptData(_key, _name, plain_text);
 
-    // Send a test message.
-    std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Hello");
-    msglib::EncryptedMessage enc_msg(encrypted_message, _name);
-    enc_msg.Pack(buffer);
+    msglib::EncryptedMessage msg(cipher_text, _name);
+    msg.Pack(buffer);
     AddBufferToQueue(buffer, 4096);
 
-    // DEBUG: SEND 10 MESSAGES
-    for (int i = 0; i < 10; i++) {
-        std::string encrypted_message = _sec_service->encryptionService->EncryptData(_key, _name, "Test Message #" + std::to_string(i));
-        msglib::EncryptedMessage enc_msg(encrypted_message, _name);
-        enc_msg.Pack(buffer);
-        AddBufferToQueue(buffer, 4096);
-    }
+    _can_encrypt.fetch_add(1, std::memory_order_seq_cst);
 }
 
 void Client::SendQueue() {
@@ -293,6 +287,7 @@ bool Client::IsRunning() {
 
 void Client::SendStatusUpdatesThreadFunction() {
     unsigned char buffer[4096];
+    memset((void*)buffer, '0', sizeof(buffer));
 
     // Check if we can encrypt.
     while (_can_encrypt.load() == 0) {
@@ -303,7 +298,9 @@ void Client::SendStatusUpdatesThreadFunction() {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
-    int i = 0;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    int i = 1;
     // Send status updates
     while(_kill_threads.load() != 1) {
 
@@ -311,9 +308,13 @@ void Client::SendStatusUpdatesThreadFunction() {
         std::string message = "StatusUpd ";
         message = message.append("test=" + std::to_string(i));
         message = message.append(",param2=hello");
-        std::string encrpted_string = _sec_service->encryptionService->EncryptData(_key, _name, message);
+        std::string encrypted_string = _sec_service->encryptionService->EncryptData(_key, _name, message);
 
-        msglib::EncryptedMessage enc_msg(encrpted_string, _name);
+        std::string decrypted_message = _sec_service->encryptionService->DecryptData(_key, _name, encrypted_string);
+
+        std::cout << "Pre-Decrypted Message: " << decrypted_message << std::endl;
+
+        msglib::EncryptedMessage enc_msg(encrypted_string, _name);
         enc_msg.Pack(buffer);
 
         AddBufferToQueue(buffer, 4096);
