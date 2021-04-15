@@ -153,8 +153,9 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
                 // Map the params
                 {
                     unique_lock lock(_client_statuses_mutex);
-                    vector<string> single_param;
+                    
                     for (int i = 0; i < params_vec.size(); i++) {
+                        vector<string> single_param;
                         SplitString(params_vec[i], '=', single_param);
                         _client_statuses[incoming_msg.name][single_param[0]] = single_param[1];
 
