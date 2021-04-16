@@ -59,12 +59,8 @@ void CommandServer::HandleClientConnection(int socket) {
             break;
         }
 
-        cout << "Received bytes" << endl;
-
         int messageId;
         msglib::IMessage::RetrieveInt(&messageId, (unsigned char*)buffer, 0);
-
-        cout << messageId << endl;
 
         HandleMessage(messageId, buffer);
 
@@ -208,4 +204,35 @@ void CommandServer::SplitString(const string& s, char c, vector<string>& v) {
         if (j == string::npos)
             v.push_back(s.substr(i, s.length()));
     }
+}
+
+vector<string> CommandServer::GetClientNames() {
+    vector<string> client_names;
+
+    {
+        unique_lock lock(_client_statuses_mutex);
+
+        for(pair<string, map<string, string>> element : _client_statuses) {
+                client_names.push_back(element.first);
+        }
+
+    }
+
+    return client_names;
+}
+
+vector<string> CommandServer::GetClientStatus(string client_name) {
+    vector<string> client_status;
+
+    map<string, string> statuses;
+    {
+        unique_lock lock(_client_statuses_mutex);
+
+        statuses = _client_statuses[client_name];
+    }
+
+    for(pair<string, string> element : statuses) {
+                client_status.push_back(element.first + " : " + element.second);
+    }
+
 }

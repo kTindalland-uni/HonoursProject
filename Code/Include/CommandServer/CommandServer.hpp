@@ -11,6 +11,8 @@ class CommandServer {
         CommandServer();
         void SplitString(const std::string& s, char c, std::vector<std::string>& v);
         void HandleClientConnection(int socket);
+        std::vector<std::string> GetClientNames();
+        std::vector<std::string> GetClientStatus(std::string clientName);
 
         std::shared_mutex _client_statuses_mutex;
         std::map<std::string, std::map<std::string, std::string>> _client_statuses;
