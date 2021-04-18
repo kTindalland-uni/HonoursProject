@@ -53,10 +53,6 @@ void CommandServer::HandleClientConnection(int socket) {
 
         // Wait for client to send data.
         int bytesReceived = recv(socket, buffer, bufferLen, 0);
-        if (bytesReceived == -1) {
-            cerr << "Error in recv()." << endl; 
-            break;
-        }
 
         if (bytesReceived == 0) {
             cout << "Client disconnected." << endl;
@@ -64,7 +60,6 @@ void CommandServer::HandleClientConnection(int socket) {
         }
 
         if (_is_running.load() < 1) {
-            cout << _is_running.load();
             break;
         }
 
