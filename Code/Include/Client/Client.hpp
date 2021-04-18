@@ -45,7 +45,7 @@ class Client {
         void SendStatusUpdatesThreadFunction();
     public:
         Client();
-        void StartClient();
+        void StartClient(std::string name);
         void GetEncryptionKeys();
         void StartCommunicationThreads();
         void KillCommunicationThreads();

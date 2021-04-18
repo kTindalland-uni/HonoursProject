@@ -49,49 +49,8 @@ namespace cmdserv {
         char service[NI_MAXSERV]; // Service (port) the client is connected on.
 
         memset(host, 0, NI_MAXHOST);
-        memset(service, 0, NI_MAXSERV);
-
-        if(getnameinfo((sockaddr*)&client, sizeof(client), host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0) {
-            cout << host << " connected on port " << service << endl;
-        }
-        else {
-            inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
-            cout << host << " connected on port " << ntohs(client.sin_port) << endl;
-        }
-
-        
+        memset(service, 0, NI_MAXSERV);        
 
         return clientSocket; // Return file descriptor.char buffer[4096];
-    }
-
-    void TcpServer::EchoTest(int clientSocket) {
-        char buffer[4096];
-
-        memset(buffer, 0, 4096);
-
-        // Wait for client to send data.
-        int bytesReceived = recv(clientSocket, buffer, 4096, 0);
-        if (bytesReceived == -1) {
-            cerr << "Error in recv()." << endl;
-            return;
-        }
-
-        if (bytesReceived == 0) {
-            cout << "Client disconnected." << endl;
-            return;
-        }
-
-        msglib::StartTransMessage rx;
-        rx.Unpack((unsigned char*)buffer);
-
-        cout << rx.name << endl;
-
-        // Echo message back.
-        unsigned char rx_buff[4096];
-        rx.Pack(rx_buff);
-
-        send(clientSocket, rx_buff, 4096, 0);
-
-        close(clientSocket);
     }
 }

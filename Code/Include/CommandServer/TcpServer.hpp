@@ -4,7 +4,6 @@ namespace cmdserv {
             TcpServer();
             ~TcpServer();
             int Listen();
-            void EchoTest(int clientSocket);
 
         private:
             int listeningSocket;

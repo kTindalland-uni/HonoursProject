@@ -10,6 +10,8 @@
 #include <mutex>
 #include <shared_mutex>
 #include <vector>
+#include <thread>
+#include <atomic>
 
 // Message lib
 #include <MessageLib/IMessage.hpp>
@@ -38,33 +40,31 @@ CommandServer::CommandServer() {
 
     sec_service->symmetricKeyGenerationService->GenerateKeys(private_key, public_key);
     sec_service->keyExchangeService->GenerateIntermediateKeys(KE_private_key, KE_public_key);
+
+    _is_running.fetch_add(1, memory_order_seq_cst);
 }
 
 void CommandServer::HandleClientConnection(int socket) {
     int const bufferLen = 4096;
     char buffer[bufferLen];
 
-    while (true) {
+    while (_is_running.load() != 0) {
         memset(buffer, 0, 4096);
 
         // Wait for client to send data.
         int bytesReceived = recv(socket, buffer, bufferLen, 0);
-        if (bytesReceived == -1) {
-            cerr << "Error in recv()." << endl;
-            break;
-        }
 
         if (bytesReceived == 0) {
             cout << "Client disconnected." << endl;
             break;
         }
 
-        cout << "Received bytes" << endl;
+        if (_is_running.load() < 1) {
+            break;
+        }
 
         int messageId;
         msglib::IMessage::RetrieveInt(&messageId, (unsigned char*)buffer, 0);
-
-        cout << messageId << endl;
 
         HandleMessage(messageId, buffer);
 
@@ -164,22 +164,6 @@ void CommandServer::HandleMessage(int messageId, char* buffer) {
                 
 
             }
-
-
-            // Iterate over map and print
-            map<string, string> client_status;
-            {
-                unique_lock lock(_client_statuses_mutex);
-
-                client_status = _client_statuses[incoming_msg.name];
-            }
-            map<string, string>::iterator iter = client_status.begin();
-
-            for(pair<string, string> element : client_status) {
-                cout << element.first << ": " << element.second << endl;
-            }
-
-
             // Encrypt and send back
 
             std::string encrypted_message = sec_service->encryptionService->EncryptData(key, incoming_msg.name, decrypted_message);
@@ -208,4 +192,87 @@ void CommandServer::SplitString(const string& s, char c, vector<string>& v) {
         if (j == string::npos)
             v.push_back(s.substr(i, s.length()));
     }
+}
+
+vector<string> CommandServer::GetClientNames() {
+    vector<string> client_names;
+
+    {
+        unique_lock lock(_client_statuses_mutex);
+
+        for(pair<string, map<string, string>> element : _client_statuses) {
+                client_names.push_back(element.first);
+        }
+
+    }
+
+    return client_names;
+}
+
+vector<string> CommandServer::GetClientStatus(string client_name) {
+    vector<string> client_status;
+
+    map<string, string> statuses;
+    {
+        unique_lock lock(_client_statuses_mutex);
+
+        statuses = _client_statuses[client_name];
+    }
+
+    for(pair<string, string> element : statuses) {
+                client_status.push_back(element.first + " : " + element.second);
+    }
+
+    return client_status;
+
+}
+
+void CommandServer::CommandThreadMain() {
+    while(_is_running.load() > 0) {
+        cout << "Please enter your command: ";
+
+        string input;
+
+        cin >> input;
+
+        string command = input.substr(0, 4);
+
+        if (command == "list") {
+            vector<string> names = GetClientNames();
+            for (string name : names) {
+                cout << " -" << name << endl;
+            }
+        }
+        else if (command == "show") {
+            string name;
+            cin >> name;
+            vector<string> statuses = GetClientStatus(name);
+
+            cout << "Showing status of " << name << endl;
+
+            for (string status : statuses) {
+                cout << " -" << status << endl;
+            }
+        }
+        else if (command == "quit") {
+            StopServer();
+        }
+        else {
+            cout << "Not a valid command. Valid commands are 'list' and 'show'." << endl;
+        }
+    }
+}
+
+thread CommandServer::RunCommandThread() {
+    thread command_thread(&CommandServer::CommandThreadMain, this);
+
+    return command_thread;
+}
+
+bool CommandServer::IsRunning() {
+    return _is_running.load() > 0;
+}
+
+void CommandServer::StopServer() {
+    _is_running.fetch_and(0, memory_order_seq_cst);
 }
