@@ -30,7 +30,6 @@
 #include <Client/Client.hpp>
 
  Client::Client() {
-    _name = "Client1";
     _key = "";
     _server_sign_key = "";
     _server_pub_key = "";
@@ -46,7 +45,8 @@
  }
 
 // Establish a connection to the server.
- void Client::StartClient() {
+ void Client::StartClient(std::string name) {
+    _name = name;
     struct sockaddr_in ipOfServer;
 
     if((_socket_fd = socket(AF_INET, SOCK_STREAM, 0))< 0)

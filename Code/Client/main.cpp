@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <chrono>
 #include <Client/Client.hpp>
 
@@ -16,13 +17,18 @@ void sigint_handler(int signum) {
     client.StopAll();
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    
     // Register the signal interrupt.
     signal(SIGINT, sigint_handler);
 
-    // Spin up the client    
-    client.StartClient();
+    // Spin up the client
+    std::string name = "Un-named_client";
+    if (argc > 1) {
+        name = std::string(argv[1]);
+    }
+    client.StartClient(name);
     client.StartCommunicationThreads();
     client.GetEncryptionKeys();
 
@@ -34,18 +40,4 @@ int main()
     }
  
     return 0;
-}
-
-void SendStatusUpdate() {
-
-    // Send 10 status updates
-    for(int i = 0; i < 10; i++) {
-
-        // Create and pack a message.
-        
-
-        // Wait for 3 seconds
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-    }
-
 }
