@@ -1,0 +1,8 @@
+Decisions:
+	Encryption Lib x
+	Testing Lib x
+	CMake x 
+`	GitHub x 
+	C++ x 
+	Re-scope
+	Finishing with a lot of stuff not done

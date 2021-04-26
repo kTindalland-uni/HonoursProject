@@ -228,6 +228,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="14" second="0">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -235,6 +237,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="1">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -242,6 +246,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="2">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -249,6 +255,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndMultiplicity>1</EndMultiplicity>
       </Relationship>
       <Relationship type="Association" first="14" second="6">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -261,6 +269,8 @@ This should make it easier to roll out new versions of the code.</Text>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="14" second="15">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -278,107 +288,56 @@ This should make it easier to roll out new versions of the code.</Text>
     <Language>CSharp</Language>
     <Entities>
       <Entity type="Class">
-        <Name>CommandAndControlServer</Name>
+        <Name>CommandServer</Name>
         <Access>Public</Access>
-        <Location left="478" top="214" />
-        <Size width="242" height="416" />
+        <Location left="13" top="10" />
+        <Size width="308" height="402" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public void PollForDevices()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Interface">
-        <Name>IDeviceHandler</Name>
-        <Access>Public</Access>
-        <Location left="837" top="193" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">void Start()</Member>
-      </Entity>
-      <Entity type="Interface">
-        <Name>IAPIHandler</Name>
-        <Access>Public</Access>
-        <Location left="1065" top="193" />
-        <Size width="195" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">void Start()</Member>
-        <Member type="Method">void ListenForRequests()</Member>
-        <Member type="Method">void HandleRequest()</Member>
-      </Entity>
-      <Entity type="Class">
-        <Name>DeviceHandler</Name>
-        <Access>Public</Access>
-        <Location left="837" top="459" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public CommandServer()</Member>
+        <Member type="Method">public bool IsRunnig()</Member>
+        <Member type="Method">public void StopServer()</Member>
+        <Member type="Method">public void HandleClientConnection(int socket)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>APIHandler</Name>
+        <Name>TcpServer</Name>
         <Access>Public</Access>
-        <Location left="1088" top="459" />
-        <Size width="162" height="216" />
+        <Location left="340" top="10" />
+        <Size width="308" height="402" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public void Start()</Member>
-        <Member type="Method">public void ListenForRequests()</Member>
-        <Member type="Method">public void HandleRequest()</Member>
+        <Member type="Field">int listening_socket</Member>
+        <Member type="Constructor">public TcpServer()</Member>
+        <Member type="Destructor">~TcpServer()</Member>
+        <Member type="Method">public int Listen()</Member>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
-    <Relationships>
-      <Relationship type="Realization" first="4" second="2">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-    </Relationships>
+    <Relationships />
   </ProjectItem>
   <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
     <Name>Device Driver</Name>
     <Language>CSharp</Language>
     <Entities>
       <Entity type="Class">
-        <Name>CommsModule</Name>
+        <Name>DeviceDriver</Name>
         <Access>Public</Access>
-        <Location left="467" top="461" />
-        <Size width="361" height="216" />
+        <Location left="32" top="26" />
+        <Size width="334" height="324" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public bool SendMessageToServer(IEncryptedMessage message)</Member>
-        <Member type="Method">public void ListenForMessage()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>IncomingMessgeHandler</Name>
-        <Access>Public</Access>
-        <Location left="900" top="461" />
-        <Size width="363" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">int newField</Member>
-        <Member type="Method">public void HandleMessage(IEncryptedMessage message)</Member>
-        <Member type="Method">private void HandleXMessage()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Comment">
-        <Text>Private Function for each type of message that the device driver should need to handle.</Text>
-        <Location left="1287" top="461" />
-        <Size width="160" height="75" />
-      </Entity>
-      <Entity type="Class">
-        <Name>WorkloadInterface</Name>
-        <Access>Public</Access>
-        <Location left="944" top="151" />
-        <Size width="307" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">public void SendData(string channel, byte[] data)</Member>
-        <Member type="Method">public string PullData(string channel)</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>FileSystemInterface</Name>
-        <Access>Public</Access>
-        <Location left="511" top="151" />
-        <Size width="280" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">public void CreateNewWorkloadFile()</Member>
-        <Member type="Method">public void MakeWorkload()</Member>
+        <Member type="Field">int _socket_id</Member>
+        <Member type="Field">SecurityService _sec_service</Member>
+        <Member type="Field">Queue&lt;String&gt; _message_queue</Member>
+        <Member type="Field">String _key</Member>
+        <Member type="Field">String _name</Member>
+        <Member type="Method">void HandleIncoming()</Member>
+        <Member type="Method">void SendQueue()</Member>
+        <Member type="Method">void Listen()</Member>
+        <Member type="Method">public void StartClient()</Member>
+        <Member type="Method">public void IsRunning()</Member>
+        <Member type="Method">public void Stop()</Member>
+        <Member type="Constructor">public DeviceDriver()</Member>
+        <Member type="Method">public void SendStatusUpdates()</Member>
+        <Member type="Method">public void RunWorkload()</Member>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
@@ -432,7 +391,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>APIHandler</Name>
         <Access>Public</Access>
-        <Location left="362" top="290" />
+        <Location left="348" top="271" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public void MakeRequest()</Member>
@@ -441,7 +400,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>DataStore</Name>
         <Access>Public</Access>
-        <Location left="767" top="284" />
+        <Location left="52" top="271" />
         <Size width="236" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Property">public DeviceData[] Devices { get; set; }</Member>
@@ -450,7 +409,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Structure">
         <Name>DeviceData</Name>
         <Access>Public</Access>
-        <Location left="1273" top="35" />
+        <Location left="558" top="22" />
         <Size width="285" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Property">public string DeviceName { get; set; }</Member>
@@ -462,7 +421,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Structure">
         <Name>DataPoint</Name>
         <Access>Public</Access>
-        <Location left="1049" top="35" />
+        <Location left="334" top="22" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Property">public string DataName { get; set; }</Member>
@@ -471,7 +430,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Structure">
         <Name>InputDataPoint</Name>
         <Access>Public</Access>
-        <Location left="767" top="35" />
+        <Location left="52" top="22" />
         <Size width="236" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Property">public string InputName { get; set; }</Member>
@@ -480,7 +439,7 @@ This should make it easier to roll out new versions of the code.</Text>
       <Entity type="Class">
         <Name>GraphicsHandler</Name>
         <Access>Public</Access>
-        <Location left="767" top="544" />
+        <Location left="52" top="531" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">DataStore devices</Member>
@@ -490,8 +449,6 @@ This should make it easier to roll out new versions of the code.</Text>
     </Entities>
     <Relationships>
       <Relationship type="Association" first="5" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -506,35 +463,93 @@ This should make it easier to roll out new versions of the code.</Text>
     <Language>CSharp</Language>
     <Entities>
       <Entity type="Interface">
-        <Name>IEncryptedMessage</Name>
+        <Name>IMessage</Name>
         <Access>Public</Access>
-        <Location left="788" top="458" />
-        <Size width="215" height="216" />
+        <Location left="654" top="457" />
+        <Size width="340" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">byte[] PackMessage()</Member>
-        <Member type="Property">int UnpackMessage { get; set; }</Member>
+        <Member type="Method">void Pack(char buffer)</Member>
+        <Member type="Property">int messageId { get; set; }</Member>
+        <Member type="Method">void Unpack(char buffer)</Member>
+        <Member type="Method">static int InsertInt(int number, char buffer, int buffer)</Member>
+        <Member type="Method">static int InsertString(string data, char buffer, int index)</Member>
+        <Member type="Method">static int RetrieveInt(int result, char buffer, int index)</Member>
+        <Member type="Method">static int RetrieveString(string result, char buffer, int index)</Member>
       </Entity>
       <Entity type="Class">
-        <Name>DeployWorkloadEncryptedMessage</Name>
+        <Name>EncryptedMessage</Name>
         <Access>Public</Access>
-        <Location left="562" top="71" />
-        <Size width="271" height="216" />
+        <Location left="27" top="19" />
+        <Size width="372" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public byte[] PackMessage()</Member>
-        <Member type="Property">public byte[] EncryptedData { get; set; }</Member>
-        <Member type="Property">public int MessageID { get; set; }</Member>
-        <Member type="Property">public byte[] Signature { get; set; }</Member>
-        <Member type="Property">public int UnpackMessage { get; set; }</Member>
+        <Member type="Field">public string message</Member>
+        <Member type="Field">public string name</Member>
+        <Member type="Method">public void Pack(char buffer)</Member>
+        <Member type="Constructor">public EncryptedMessage()</Member>
+        <Member type="Constructor">public EncryptedMessage(string message, string name)</Member>
+        <Member type="Property">public int messageId { get; set; }</Member>
+        <Member type="Method">public void Unpack(char buffer)</Member>
         <Modifier>None</Modifier>
       </Entity>
-      <Entity type="Comment">
-        <Text>All other message types will be defined within this library as that will allow all other programs to be able to recognise messages.</Text>
-        <Location left="907" top="119" />
-        <Size width="160" height="148" />
+      <Entity type="Class">
+        <Name>RequestMessage</Name>
+        <Access>Public</Access>
+        <Location left="429" top="19" />
+        <Size width="372" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public string request</Member>
+        <Member type="Field">public string name</Member>
+        <Member type="Method">public void Pack(char buffer)</Member>
+        <Member type="Constructor">public RequestMessage()</Member>
+        <Member type="Constructor">public RequestMessage(string request_string, string name)</Member>
+        <Member type="Property">public int messageId { get; set; }</Member>
+        <Member type="Method">public void Unpack(char buffer)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ResponseMessage</Name>
+        <Access>Public</Access>
+        <Location left="833" top="19" />
+        <Size width="372" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public string request_sent</Member>
+        <Member type="Field">public string response</Member>
+        <Member type="Method">public void Pack(char buffer)</Member>
+        <Member type="Constructor">public ResponseMessage()</Member>
+        <Member type="Constructor">public ResponseMessage(string request_string, string response)</Member>
+        <Member type="Property">public int messageId { get; set; }</Member>
+        <Member type="Method">public void Unpack(char buffer)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>StartTransMessage</Name>
+        <Access>Public</Access>
+        <Location left="1243" top="19" />
+        <Size width="372" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public string name</Member>
+        <Member type="Method">public void Pack(char buffer)</Member>
+        <Member type="Constructor">public StartTransMessage()</Member>
+        <Member type="Constructor">public StartTransMessage(string name)</Member>
+        <Member type="Property">public int messageId { get; set; }</Member>
+        <Member type="Method">public void Unpack(char buffer)</Member>
+        <Modifier>None</Modifier>
       </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Realization" first="1" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="2" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="3" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="4" second="0">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
