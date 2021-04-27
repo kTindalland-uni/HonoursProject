@@ -4,9 +4,7 @@
 
 TEST(AES_Encryption_Tests, SunnyDay) {
     // Arrange
-    securitylib::AESEncryptionService service;
-
-    
+    securitylib::AESEncryptionService service;    
 
     // Act
     std::string ciphertext = service.EncryptData("HHHHHHHHHHHHHHHH", "AAAAAAAAAAAAAAAA", "Hello world!");
